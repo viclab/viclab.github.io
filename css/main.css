@@ -965,7 +965,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #0a46f5;
+  background: #f2ffb8;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -1016,7 +1016,7 @@ body {
   font-size: 14px;
 }
 .post-toc ol a {
-  color: #999;
+  color: #222;
 }
 .post-toc ol a:hover {
   color: #ccc;
