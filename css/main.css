@@ -965,7 +965,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #f2ffb8;
+  background: #45ffff;
 }
 .sidebar-nav {
   margin: 0 0 20px;
@@ -987,11 +987,11 @@ body {
   margin-left: 10px;
 }
 .sidebar-nav .sidebar-nav-active {
-  color: #87daff;
-  border-bottom-color: #87daff;
+  color: #0684bd;
+  border-bottom-color: #0684bd;
 }
 .sidebar-nav .sidebar-nav-active:hover {
-  color: #87daff;
+  color: #0684bd;
 }
 .sidebar-panel {
   display: none;
@@ -1037,10 +1037,10 @@ body {
   color: #ccc;
 }
 .post-toc .nav .active-current > a {
-  color: #87daff;
+  color: #0684bd;
 }
 .post-toc .nav .active-current > a:hover {
-  color: #87daff;
+  color: #0684bd;
 }
 .post-toc-indicator {
   height: 20px;
@@ -1912,7 +1912,7 @@ body {
   position: absolute;
 }
 .page-post-detail .sidebar-toggle-line {
-  background: #87daff;
+  background: #0684bd;
 }
 .page-post-detail .comments {
   overflow: hidden;
