@@ -240,7 +240,7 @@
         <div class="post-meta">
           <span class="post-time">
             发表于
-            <time itemprop="dateCreated" datetime="2016-01-22T02:19:21+00:00" content="2016-01-22">
+            <time itemprop="dateCreated" datetime="2016-01-22T02:22:24+00:00" content="2016-01-22">
               2016-01-22
             </time>
           </span>
@@ -267,7 +267,7 @@
         
           <span itemprop="articleBody">
             
-            C++头文件互相包含问题这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
+            title: C++头文件互相包含问题这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
 ‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
 ‘XXX’ is incomplete type这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a.h”)FIX:去掉相互包含，改为在*.cpp中包含
 原因分析如何避免问题尽量采用前置声明，前置声明不满足，则采用#include指令包含头文件
@@ -276,6 +276,180 @@
           </span>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/01/22/head-include-problem/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/17/test/" itemprop="url">
+                  test
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-12-17T09:33:32+00:00" content="2015-12-17">
+              2015-12-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            
+            
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/17/test/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                
+                <a class="post-title-link" href="/2015/12/17/hello-world/" itemprop="url">
+                  Hello World
+                </a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            发表于
+            <time itemprop="dateCreated" datetime="2015-12-17T08:59:05+00:00" content="2015-12-17">
+              2015-12-17
+            </time>
+          </span>
+
+          
+
+          
+            
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub.
+Quick StartCreate a new post1$ hexo new "My New Post"
+More info: Writing
+Run server1$ hexo server
+More in
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2015/12/17/hello-world/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
