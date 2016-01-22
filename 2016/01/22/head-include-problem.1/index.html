@@ -4,18 +4,24 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>test | 代码之道</title>
+  <title>C++头文件互相包含问题 | 代码之道</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="重复就是罪恶，简单就是美">
+  <meta name="description" content="这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
+‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
+‘XXX’ is incomplete type这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="test">
-<meta property="og:url" content="http://yoursite.com/2015/12/17/test/index.html">
+<meta property="og:title" content="C++头文件互相包含问题">
+<meta property="og:url" content="http://yoursite.com/2016/01/22/head-include-problem.1/index.html">
 <meta property="og:site_name" content="代码之道">
-<meta property="og:description" content="重复就是罪恶，简单就是美">
-<meta property="og:updated_time" content="2015-12-17T09:33:32.000Z">
+<meta property="og:description" content="这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
+‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
+‘XXX’ is incomplete type这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a">
+<meta property="og:updated_time" content="2016-01-22T02:24:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="test">
-<meta name="twitter:description" content="重复就是罪恶，简单就是美">
+<meta name="twitter:title" content="C++头文件互相包含问题">
+<meta name="twitter:description" content="这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
+‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
+‘XXX’ is incomplete type这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a">
   
     <link rel="alternative" href="/atom.xml" title="代码之道" type="application/atom+xml">
   
@@ -197,11 +203,11 @@
 	</div>
 </nav>
 
-      <div class="body-wrap"><article id="post-test" class="article article-type-post" itemscope itemprop="blogPost">
+      <div class="body-wrap"><article id="post-head-include-problem.1" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2015/12/17/test/" class="article-date">
-  	<time datetime="2015-12-17T09:33:32.000Z" itemprop="datePublished">2015-12-17</time>
+      <a href="/2016/01/22/head-include-problem.1/" class="article-date">
+  	<time datetime="2016-01-22T02:49:07.000Z" itemprop="datePublished">2016-01-22</time>
 </a>
     </div>
   
@@ -214,7 +220,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      test
+      C++头文件互相包含问题
     </h1>
   
 
@@ -230,7 +236,11 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        
+        <p>这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。</p>
+<h2 id="u2018XXX_u2019_is_not_a_type"><a href="#u2018XXX_u2019_is_not_a_type" class="headerlink" title="‘XXX’ is not a type"></a>‘XXX’ is not a type</h2><p>通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致<br>FIX:包含头文件或添加前置声明</p>
+<h2 id="u2018XXX_u2019_is_incomplete_type"><a href="#u2018XXX_u2019_is_incomplete_type" class="headerlink" title="‘XXX’ is incomplete type"></a>‘XXX’ is incomplete type</h2><p>这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a.h”)<br>FIX:去掉相互包含，改为在*.cpp中包含</p>
+<h2 id="u539F_u56E0_u5206_u6790"><a href="#u539F_u56E0_u5206_u6790" class="headerlink" title="原因分析"></a>原因分析</h2><h2 id="u5982_u4F55_u907F_u514D_u95EE_u9898"><a href="#u5982_u4F55_u907F_u514D_u95EE_u9898" class="headerlink" title="如何避免问题"></a>如何避免问题</h2><p>尽量采用前置声明，前置声明不满足，则采用#include指令包含头文件</p>
+
       
     </div>
     
@@ -239,18 +249,18 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/01/22/head-include-problem.1/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/01/22/battle-target/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          C++头文件互相包含问题
+          战斗内目标系统
         
       </div>
     </a>
   
   
-    <a href="/2015/12/17/hello-world/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">Hello World</div>
+    <a href="/2015/12/17/test/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">test</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
@@ -285,7 +295,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="test" data-title="test" data-url="http://yoursite.com/2015/12/17/test/"></div>
+	<div class="ds-thread" data-thread-key="head-include-problem.1" data-title="C++头文件互相包含问题" data-url="http://yoursite.com/2016/01/22/head-include-problem.1/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
