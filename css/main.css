@@ -1065,7 +1065,7 @@ body {
 .sidebar-inner {
   position: relative;
   padding: 20px 10px;
-  color: #999;
+  color: #222;
   text-align: center;
 }
 .site-author-image {
@@ -1148,7 +1148,7 @@ body {
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: #d2af75;
+  background: #8879ff;
 }
 .sidebar-nav {
   margin: 0;
@@ -1193,10 +1193,10 @@ body {
   font-size: 14px;
 }
 .post-toc ol a {
-  color: #999;
+  color: #222;
 }
 .post-toc ol a:hover {
-  color: #ccc;
+  color: #ff2a2a;
 }
 .post-toc .nav .nav-child {
   display: none;
@@ -1208,10 +1208,10 @@ body {
   color: #0684bd;
 }
 .post-toc .nav .active-current > a {
-  color: #87daff;
+  color: #0684bd;
 }
 .post-toc .nav .active-current > a:hover {
-  color: #87daff;
+  color: #0684bd;
 }
 .post-toc-indicator {
   height: 20px;
