@@ -37,22 +37,19 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
-‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
-‘XXX’ is incomplete type这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a">
+<meta name="description" content="由于最近更换项目组，编译机之前配置好的VIM的IDE环境也需要迁移，由于YouCompleteMe插件需要重新编译，而且新的编译机所依赖的库的情况也不同，所以重新编译插件时有几个问题，在此予以记录。
+编译YouCompleteMe插件之前在151的编译机上全新编译YouCompleteMe插件，由于编译机不能联网，所有的依赖都需要手动拷贝，再源码安装，过程很费事费力，这里有全新安装的教程地址考虑到">
 <meta property="og:type" content="article">
-<meta property="og:title" content="C++头文件互相包含问题">
-<meta property="og:url" content="http://viclab.github.io/2016/01/22/head-include-problem.1/index.html">
+<meta property="og:title" content="YouCompleteMe插件再编译机环境再安装记录">
+<meta property="og:url" content="http://viclab.github.io/2016/02/16/youcompleteme-md/index.html">
 <meta property="og:site_name" content="代碼之道">
-<meta property="og:description" content="这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
-‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
-‘XXX’ is incomplete type这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a">
-<meta property="og:updated_time" content="2016-01-22T02:24:16.000Z">
+<meta property="og:description" content="由于最近更换项目组，编译机之前配置好的VIM的IDE环境也需要迁移，由于YouCompleteMe插件需要重新编译，而且新的编译机所依赖的库的情况也不同，所以重新编译插件时有几个问题，在此予以记录。
+编译YouCompleteMe插件之前在151的编译机上全新编译YouCompleteMe插件，由于编译机不能联网，所有的依赖都需要手动拷贝，再源码安装，过程很费事费力，这里有全新安装的教程地址考虑到">
+<meta property="og:updated_time" content="2016-02-16T09:00:19.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="C++头文件互相包含问题">
-<meta name="twitter:description" content="这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
-‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
-‘XXX’ is incomplete type这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a">
+<meta name="twitter:title" content="YouCompleteMe插件再编译机环境再安装记录">
+<meta name="twitter:description" content="由于最近更换项目组，编译机之前配置好的VIM的IDE环境也需要迁移，由于YouCompleteMe插件需要重新编译，而且新的编译机所依赖的库的情况也不同，所以重新编译插件时有几个问题，在此予以记录。
+编译YouCompleteMe插件之前在151的编译机上全新编译YouCompleteMe插件，由于编译机不能联网，所有的依赖都需要手动拷贝，再源码安装，过程很费事费力，这里有全新安装的教程地址考虑到">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -62,7 +59,7 @@
   };
 </script>
 
-    <title> C++头文件互相包含问题 // 代碼之道 </title>
+    <title> YouCompleteMe插件再编译机环境再安装记录 // 代碼之道 </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -191,7 +188,7 @@
           
           
             
-              C++头文件互相包含问题
+              YouCompleteMe插件再编译机环境再安装记录
             
           
         </h1>
@@ -200,8 +197,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2016-01-22T02:49:07+00:00" content="2016-01-22">
-            2016-01-22
+          <time itemprop="dateCreated" datetime="2016-02-16T08:22:52+00:00" content="2016-02-16">
+            2016-02-16
           </time>
         </span>
 
@@ -219,10 +216,21 @@
       
 
       
-        <span itemprop="articleBody"><p>这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。</p>
-<h2 id="u2018XXX_u2019_is_not_a_type"><a href="#u2018XXX_u2019_is_not_a_type" class="headerlink" title="‘XXX’ is not a type"></a>‘XXX’ is not a type</h2><p>通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致<br>FIX:包含头文件或添加前置声明</p>
-<h2 id="u2018XXX_u2019_is_incomplete_type"><a href="#u2018XXX_u2019_is_incomplete_type" class="headerlink" title="‘XXX’ is incomplete type"></a>‘XXX’ is incomplete type</h2><p>这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a.h”)<br>FIX:去掉相互包含，改为在*.cpp中包含</p>
-<h2 id="u539F_u56E0_u5206_u6790"><a href="#u539F_u56E0_u5206_u6790" class="headerlink" title="原因分析"></a>原因分析</h2><h2 id="u5982_u4F55_u907F_u514D_u95EE_u9898"><a href="#u5982_u4F55_u907F_u514D_u95EE_u9898" class="headerlink" title="如何避免问题"></a>如何避免问题</h2><p>尽量采用前置声明，前置声明不满足，则采用#include指令包含头文件</p>
+        <span itemprop="articleBody"><p>由于最近更换项目组，编译机之前配置好的VIM的IDE环境也需要迁移，由于YouCompleteMe插件<br>需要重新编译，而且新的编译机所依赖的库的情况也不同，所以重新编译插件时有几个问题，在此<br>予以记录。</p>
+<h1 id="u7F16_u8BD1YouCompleteMe_u63D2_u4EF6"><a href="#u7F16_u8BD1YouCompleteMe_u63D2_u4EF6" class="headerlink" title="编译YouCompleteMe插件"></a>编译YouCompleteMe插件</h1><p>之前在151的编译机上全新编译YouCompleteMe插件，由于编译机不能联网，所有的依赖都需要手动<br>拷贝，再源码安装，过程很费事费力，这里有全新安装的<a href="https://www.zybuluo.com/viclab/note/199525" target="_blank" rel="external">教程地址</a><br>考虑到所有费时费力的安装其实都只是为了得到llvm+clang的库，而YouCompleteMe插件编译安装主要<br>也只是依赖这些库而已，所有借着这次迁移环境的机会尝试一下直接从上次已经编译好的clang库来安装<br>YouCompleteMe插件。<br>首先，依照<a href="http://blog.csdn.net/leaf5022/article/details/21290509" target="_blank" rel="external">教程</a>中自定义指定自定义的clang库<br>路径。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/.vim/YouCompleteMe</span><br><span class="line">cmake -G <span class="string">"Unix Makefiles"</span> -DEXTERNAL_LIBCLANG_PATH=~/ycm/lib/libclang.so ~/.vim/bundle/YouCompleteMe/cpp</span><br></pre></td></tr></table></figure></p>
+<p>发现出错<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">CMake Error at /usr/share/cmake-<span class="number">2.8</span>/Modules/FindPackageHandleStandardArgs.cmake:<span class="number">108</span>          </span><br><span class="line">(message):</span><br><span class="line">Could NOT find PythonLibs (missing: PYTHON_LIBRARIES PYTHON_INCLUDE_DIRS)</span><br></pre></td></tr></table></figure></p>
+<p>很显然，这里是cmake找不到系统的python库，所以需要指定，那么如何指定呢，一番波折之后，按照如下方式指定即可。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmake -G <span class="string">"Unix Makefiles"</span> -DEXTERNAL_LIBCLANG_PATH=~/ycm/lib/libclang.so -DPYTHON_LIBRARY=/usr/lib/python2.<span class="number">6</span> </span><br><span class="line">-DPYTHON_INCLUDE_DIR=/usr/include/python2.<span class="number">6</span> . ~/.vim/YouCompleteMe/third_party/ycmd/cpp</span><br></pre></td></tr></table></figure></p>
+<p>当然DPYTHON_INCLUDE_DIR和DPYTHON_LIBRARY是根据系统本地路径来填写。解决了这个问题后发现又有新的问题，就是在编译过程<br>中，发现到50%的时候出现了这个错误<code>Compilation failed : pyconfig.h: No such file or directory</code>，这里其实缺少python库<br>的某些头文件，其实很好解决，在centos系列的系统中使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install python-devel</span><br></pre></td></tr></table></figure></p>
+<p>在Ubuntu系列的系统中用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-dev</span><br></pre></td></tr></table></figure></p>
+<p>之后成功编译完成。</p>
+<h2 id="u7F16_u8BD1_u9AD8_u7248_u672CVIM"><a href="#u7F16_u8BD1_u9AD8_u7248_u672CVIM" class="headerlink" title="编译高版本VIM"></a>编译高版本VIM</h2><p>由于YouCompleteMe插件需要高于7.3版本的VIM，所有需要源码重装VIM，选择<a href="ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2" target="_blank" rel="external">7.4版本</a>，安装如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp </span><br><span class="line">--with-python-config-dir=/usr/lib64/python2.<span class="number">6</span>/config/ --enable-perlinterp </span><br><span class="line">--enable-gui=gtk2 --enable-cscope --enable-luainterp --enable-perlinterp </span><br><span class="line">--enable-multibyte --prefix=/data/home/victorschen/ycm</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>需要注意一点，就是一定要有–enable-pythoninterp，开启支持python的选项，否则徒劳。</p>
+</blockquote>
+<h2 id="u91CD_u5EFA_u94FE_u63A5"><a href="#u91CD_u5EFA_u94FE_u63A5" class="headerlink" title="重建链接"></a>重建链接</h2><p>由于之前配置YouCompleteMe插件软链接时用的都是绝对路径，所以很多路径配置都失效，导致进入VIM中无法找到YCM的命令。<br>在.vim文件夹中重建autoload和plugin到YouCompleteMe中对应文件夹的软链接路径即可。其实改为相对路径，以后就不用再配置了。</p>
+<blockquote>
+<p>在以后配置软链接中尽量采用相对路径来配置</p>
+</blockquote>
 </span>
       
     </div>
@@ -234,13 +242,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/22/battle-target/" rel="prev">战斗内目标系统</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/17/transaction/" rel="next">游戏中的逻辑事务架构设计</a>
+              <a href="/2016/02/16/head-include-problem.1/" rel="next">C++头文件互相包含问题</a>
             
           </div>
         </div>
@@ -303,7 +309,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">6</span>
+              <span class="site-state-item-count">7</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
@@ -345,7 +351,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u2018XXX_u2019_is_not_a_type"><span class="nav-number">1.</span> <span class="nav-text">‘XXX’ is not a type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u2018XXX_u2019_is_incomplete_type"><span class="nav-number">2.</span> <span class="nav-text">‘XXX’ is incomplete type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u539F_u56E0_u5206_u6790"><span class="nav-number">3.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u5982_u4F55_u907F_u514D_u95EE_u9898"><span class="nav-number">4.</span> <span class="nav-text">如何避免问题</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#u7F16_u8BD1YouCompleteMe_u63D2_u4EF6"><span class="nav-number">1.</span> <span class="nav-text">编译YouCompleteMe插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#u7F16_u8BD1_u9AD8_u7248_u672CVIM"><span class="nav-number">1.1.</span> <span class="nav-text">编译高版本VIM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u91CD_u5EFA_u94FE_u63A5"><span class="nav-number">1.2.</span> <span class="nav-text">重建链接</span></a></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>

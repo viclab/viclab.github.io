@@ -37,16 +37,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="重複就是罪惡，簡單就是美">
+<meta name="description" content="这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
+‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
+‘XXX’ is incomplete type这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="协程">
-<meta property="og:url" content="http://viclab.github.io/2015/12/17/coroutine/index.html">
+<meta property="og:title" content="C++头文件互相包含问题">
+<meta property="og:url" content="http://viclab.github.io/2016/02/16/head-include-problem.1/index.html">
 <meta property="og:site_name" content="代碼之道">
-<meta property="og:description" content="重複就是罪惡，簡單就是美">
-<meta property="og:updated_time" content="2016-01-26T08:30:45.000Z">
+<meta property="og:description" content="这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
+‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
+‘XXX’ is incomplete type这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a">
+<meta property="og:updated_time" content="2016-01-22T02:24:16.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="协程">
-<meta name="twitter:description" content="重複就是罪惡，簡單就是美">
+<meta name="twitter:title" content="C++头文件互相包含问题">
+<meta name="twitter:description" content="这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
+‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
+‘XXX’ is incomplete type这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -56,7 +62,7 @@
   };
 </script>
 
-    <title> 协程 // 代碼之道 </title>
+    <title> C++头文件互相包含问题 // 代碼之道 </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -185,7 +191,7 @@
           
           
             
-              协程
+              C++头文件互相包含问题
             
           
         </h1>
@@ -194,8 +200,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-12-17T09:33:32+00:00" content="2015-12-17">
-            2015-12-17
+          <time itemprop="dateCreated" datetime="2016-02-16T08:21:50+00:00" content="2016-02-16">
+            2016-02-16
           </time>
         </span>
 
@@ -213,7 +219,11 @@
       
 
       
-        <span itemprop="articleBody"></span>
+        <span itemprop="articleBody"><p>这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。</p>
+<h2 id="u2018XXX_u2019_is_not_a_type"><a href="#u2018XXX_u2019_is_not_a_type" class="headerlink" title="‘XXX’ is not a type"></a>‘XXX’ is not a type</h2><p>通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致<br>FIX:包含头文件或添加前置声明</p>
+<h2 id="u2018XXX_u2019_is_incomplete_type"><a href="#u2018XXX_u2019_is_incomplete_type" class="headerlink" title="‘XXX’ is incomplete type"></a>‘XXX’ is incomplete type</h2><p>这种多是由于头文件相互包含(文件a.h中#include “b.h”, 同时文件b.h中#include “a.h”)<br>FIX:去掉相互包含，改为在*.cpp中包含</p>
+<h2 id="u539F_u56E0_u5206_u6790"><a href="#u539F_u56E0_u5206_u6790" class="headerlink" title="原因分析"></a>原因分析</h2><h2 id="u5982_u4F55_u907F_u514D_u95EE_u9898"><a href="#u5982_u4F55_u907F_u514D_u95EE_u9898" class="headerlink" title="如何避免问题"></a>如何避免问题</h2><p>尽量采用前置声明，前置声明不满足，则采用#include指令包含头文件</p>
+</span>
       
     </div>
 
@@ -224,11 +234,13 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2015/12/17/singleton-model/" rel="prev">单例模式的应用</a>
+              <a href="/2016/02/16/youcompleteme-md/" rel="prev">YouCompleteMe插件再编译机环境再安装记录</a>
             
           </div>
 
           <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/01/29/rank-system/" rel="next">排行榜系统</a>
             
           </div>
         </div>
@@ -333,7 +345,7 @@
           <div class="post-toc">
             
             
-              <p class="post-toc-empty">此文章未包含目录</p>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u2018XXX_u2019_is_not_a_type"><span class="nav-number">1.</span> <span class="nav-text">‘XXX’ is not a type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u2018XXX_u2019_is_incomplete_type"><span class="nav-number">2.</span> <span class="nav-text">‘XXX’ is incomplete type</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u539F_u56E0_u5206_u6790"><span class="nav-number">3.</span> <span class="nav-text">原因分析</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u5982_u4F55_u907F_u514D_u95EE_u9898"><span class="nav-number">4.</span> <span class="nav-text">如何避免问题</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
