@@ -45,7 +45,7 @@
 <meta property="og:site_name" content="代碼之道">
 <meta property="og:description" content="由于最近更换项目组，编译机之前配置好的VIM的IDE环境也需要迁移，由于YouCompleteMe插件需要重新编译，而且新的编译机所依赖的库的情况也不同，所以重新编译插件时有几个问题，在此予以记录。
 编译YouCompleteMe插件之前在151的编译机上全新编译YouCompleteMe插件，由于编译机不能联网，所有的依赖都需要手动拷贝，再源码安装，过程很费事费力，这里有全新安装的教程地址考虑到">
-<meta property="og:updated_time" content="2016-02-16T09:00:19.000Z">
+<meta property="og:updated_time" content="2016-02-16T09:01:35.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YouCompleteMe插件再编译机环境再安装记录">
 <meta name="twitter:description" content="由于最近更换项目组，编译机之前配置好的VIM的IDE环境也需要迁移，由于YouCompleteMe插件需要重新编译，而且新的编译机所依赖的库的情况也不同，所以重新编译插件时有几个问题，在此予以记录。
@@ -223,11 +223,11 @@
 <p>当然DPYTHON_INCLUDE_DIR和DPYTHON_LIBRARY是根据系统本地路径来填写。解决了这个问题后发现又有新的问题，就是在编译过程<br>中，发现到50%的时候出现了这个错误<code>Compilation failed : pyconfig.h: No such file or directory</code>，这里其实缺少python库<br>的某些头文件，其实很好解决，在centos系列的系统中使用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum install python-devel</span><br></pre></td></tr></table></figure></p>
 <p>在Ubuntu系列的系统中用<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install python-dev</span><br></pre></td></tr></table></figure></p>
 <p>之后成功编译完成。</p>
-<h2 id="u7F16_u8BD1_u9AD8_u7248_u672CVIM"><a href="#u7F16_u8BD1_u9AD8_u7248_u672CVIM" class="headerlink" title="编译高版本VIM"></a>编译高版本VIM</h2><p>由于YouCompleteMe插件需要高于7.3版本的VIM，所有需要源码重装VIM，选择<a href="ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2" target="_blank" rel="external">7.4版本</a>，安装如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp </span><br><span class="line">--with-python-config-dir=/usr/lib64/python2.<span class="number">6</span>/config/ --enable-perlinterp </span><br><span class="line">--enable-gui=gtk2 --enable-cscope --enable-luainterp --enable-perlinterp </span><br><span class="line">--enable-multibyte --prefix=/data/home/victorschen/ycm</span><br></pre></td></tr></table></figure></p>
+<h1 id="u7F16_u8BD1_u9AD8_u7248_u672CVIM"><a href="#u7F16_u8BD1_u9AD8_u7248_u672CVIM" class="headerlink" title="编译高版本VIM"></a>编译高版本VIM</h1><p>由于YouCompleteMe插件需要高于7.3版本的VIM，所有需要源码重装VIM，选择<a href="ftp://ftp.vim.org/pub/vim/unix/vim-7.4.tar.bz2" target="_blank" rel="external">7.4版本</a>，安装如下：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">./configure --with-features=huge --enable-rubyinterp --enable-pythoninterp </span><br><span class="line">--with-python-config-dir=/usr/lib64/python2.<span class="number">6</span>/config/ --enable-perlinterp </span><br><span class="line">--enable-gui=gtk2 --enable-cscope --enable-luainterp --enable-perlinterp </span><br><span class="line">--enable-multibyte --prefix=/data/home/victorschen/ycm</span><br></pre></td></tr></table></figure></p>
 <blockquote>
 <p>需要注意一点，就是一定要有–enable-pythoninterp，开启支持python的选项，否则徒劳。</p>
 </blockquote>
-<h2 id="u91CD_u5EFA_u94FE_u63A5"><a href="#u91CD_u5EFA_u94FE_u63A5" class="headerlink" title="重建链接"></a>重建链接</h2><p>由于之前配置YouCompleteMe插件软链接时用的都是绝对路径，所以很多路径配置都失效，导致进入VIM中无法找到YCM的命令。<br>在.vim文件夹中重建autoload和plugin到YouCompleteMe中对应文件夹的软链接路径即可。其实改为相对路径，以后就不用再配置了。</p>
+<h1 id="u91CD_u5EFA_u94FE_u63A5"><a href="#u91CD_u5EFA_u94FE_u63A5" class="headerlink" title="重建链接"></a>重建链接</h1><p>由于之前配置YouCompleteMe插件软链接时用的都是绝对路径，所以很多路径配置都失效，导致进入VIM中无法找到YCM的命令。<br>在.vim文件夹中重建autoload和plugin到YouCompleteMe中对应文件夹的软链接路径即可。其实改为相对路径，以后就不用再配置了。</p>
 <blockquote>
 <p>在以后配置软链接中尽量采用相对路径来配置</p>
 </blockquote>
@@ -351,7 +351,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#u7F16_u8BD1YouCompleteMe_u63D2_u4EF6"><span class="nav-number">1.</span> <span class="nav-text">编译YouCompleteMe插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#u7F16_u8BD1_u9AD8_u7248_u672CVIM"><span class="nav-number">1.1.</span> <span class="nav-text">编译高版本VIM</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u91CD_u5EFA_u94FE_u63A5"><span class="nav-number">1.2.</span> <span class="nav-text">重建链接</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#u7F16_u8BD1YouCompleteMe_u63D2_u4EF6"><span class="nav-number">1.</span> <span class="nav-text">编译YouCompleteMe插件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u7F16_u8BD1_u9AD8_u7248_u672CVIM"><span class="nav-number">2.</span> <span class="nav-text">编译高版本VIM</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u91CD_u5EFA_u94FE_u63A5"><span class="nav-number">3.</span> <span class="nav-text">重建链接</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
