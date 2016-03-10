@@ -49,7 +49,7 @@ insert 方法1std::pair&amp;lt;INT_MAP::iterator, bool&amp;gt; rs">
 map容器添加新值map容器中储存的是pair，一个key-value二元组。通常插入方式有两种，如下所示：1typedef std::map&amp;lt;int, std::string&amp;gt; STRING_MAP;
 
 insert 方法1std::pair&amp;lt;INT_MAP::iterator, bool&amp;gt; rs">
-<meta property="og:updated_time" content="2016-03-10T03:54:11.000Z">
+<meta property="og:updated_time" content="2016-03-10T03:54:45.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="map使用实践">
 <meta name="twitter:description" content="map作为容器，使用比较方便频繁，下面主要就其赋值与插入新的数据进行总结。
@@ -230,12 +230,10 @@ insert 方法1std::pair&amp;lt;INT_MAP::iterator, bool&amp;gt; rs">
 </ul>
 <p>由于普通的map同一个key值只允许存在一个value，所以，对于key=1,如果已经有value与之对应，则insert失败，rs.second值为false</p>
 <ul>
-<li>[] 赋值<br><code>`cpp
-STRING_MAP sm;
-sm[1] = &quot;victors&quot;;     
-std::cout &lt;&lt; &quot;before im[1]:&quot; &lt;&lt; im[1] &lt;&lt; std::endl;
-sm[1] = &quot;hello&quot;;</code><br>同样，对于key=1的value已经存在，再次对key=1进行赋值，则【】操作符会更新key=1的值，以对于【】操作符而言，不存在失败的说法。<br>如果map中已经存在该key，则更新该key的value值；如果不存在，则直接插入，效果同insert成功。</li>
+<li>[] 赋值<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">STRING_MAP sm;</span><br><span class="line">sm[<span class="number">1</span>] = <span class="string">"victors"</span>;     </span><br><span class="line"><span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"before im[1]:"</span> &lt;&lt; im[<span class="number">1</span>] &lt;&lt; <span class="built_in">std</span>::endl;</span><br><span class="line">sm[<span class="number">1</span>] = <span class="string">"hello"</span>;</span><br></pre></td></tr></table></figure>
+</li>
 </ul>
+<p>同样，对于key=1的value已经存在，再次对key=1进行赋值，则【】操作符会更新key=1的值，以对于【】操作符而言，不存在失败的说法。<br>如果map中已经存在该key，则更新该key的value值；如果不存在，则直接插入，效果同insert成功。</p>
 </span>
       
     </div>
