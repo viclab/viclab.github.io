@@ -186,6 +186,151 @@
           
           
             
+              <a class="post-title-link" href="/2016/03/10/map-usage-md/" itemprop="url">
+                map使用实践
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-10T03:39:16+00:00" content="2016-03-10">
+            2016-03-10
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            map作为容器，使用比较方便频繁，下面主要就其赋值与插入新的数据进行总结。
+map容器添加新值map容器中储存的是pair，一个二元组。通常插入方式有两种，如下所示：1typedef std::map&lt;int, std::string&gt; STRING_MAP;
+
+insert 方法1st
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/03/10/map-usage-md/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              <a class="post-title-link" href="/2016/03/10/head-include-problem.1/" itemprop="url">
+                C++头文件互相包含问题
+              </a>
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-10T03:37:36+00:00" content="2016-03-10">
+            2016-03-10
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        
+          <span itemprop="articleBody">
+            
+            这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
+‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
+‘XXX’ is incomplete type这种多是由
+            ...
+          </span>
+          <div class="post-more-link text-center">
+            <a class="btn" href="/2016/03/10/head-include-problem.1/#more" rel="contents">
+              阅读全文 &raquo;
+            </a>
+          </div>
+        
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+
+
+    
+      
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
               <a class="post-title-link" href="/2016/02/16/youcompleteme-md/" itemprop="url">
                 YouCompleteMe插件再编译机环境再安装记录
               </a>
@@ -225,78 +370,6 @@
           </span>
           <div class="post-more-link text-center">
             <a class="btn" href="/2016/02/16/youcompleteme-md/#more" rel="contents">
-              阅读全文 &raquo;
-            </a>
-          </div>
-        
-      
-    </div>
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-
-
-    
-      
-
-  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
-
-      
-      
-        <h1 class="post-title" itemprop="name headline">
-          
-          
-            
-              <a class="post-title-link" href="/2016/02/16/head-include-problem.1/" itemprop="url">
-                C++头文件互相包含问题
-              </a>
-            
-          
-        </h1>
-      
-
-      <div class="post-meta">
-        <span class="post-time">
-          发表于
-          <time itemprop="dateCreated" datetime="2016-02-16T08:21:50+00:00" content="2016-02-16">
-            2016-02-16
-          </time>
-        </span>
-
-        
-
-        
-          
-        
-      </div>
-    </header>
-
-    <div class="post-body">
-
-      
-      
-
-      
-        
-          <span itemprop="articleBody">
-            
-            这两天的项目中的编译遇到了头文件互相包含导致编译错误的问题，下面记录下来分析一下。
-‘XXX’ is not a type通常这种是由于没有包含头文件或者没有前置声明，编译器在预编译阶段无法找到该类型定义所致FIX:包含头文件或添加前置声明
-‘XXX’ is incomplete type这种多是由
-            ...
-          </span>
-          <div class="post-more-link text-center">
-            <a class="btn" href="/2016/02/16/head-include-problem.1/#more" rel="contents">
               阅读全文 &raquo;
             </a>
           </div>
@@ -710,7 +783,7 @@
         <nav class="site-state motion-element">
           <div class="site-state-item site-state-posts">
             <a href="/archives">
-              <span class="site-state-item-count">7</span>
+              <span class="site-state-item-count">8</span>
               <span class="site-state-item-name">日志</span>
             </a>
           </div>
