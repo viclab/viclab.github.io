@@ -38,24 +38,24 @@
 
 
 <meta name="description" content="map作为容器，使用比较方便频繁，下面主要就其赋值与插入新的数据进行总结。
-map容器添加新值map容器中储存的是pair，一个二元组。通常插入方式有两种，如下所示：1typedef std::map&amp;lt;int, std::string&amp;gt; STRING_MAP;
+map容器添加新值map容器中储存的是pair，一个key-value二元组。通常插入方式有两种，如下所示：1typedef std::map&amp;lt;int, std::string&amp;gt; STRING_MAP;
 
-insert 方法1std::pair&amp;lt;INT_MAP::iterator, bool&amp;gt; rs = im.ins">
+insert 方法1std::pair&amp;lt;INT_MAP::iterator, bool&amp;gt; rs">
 <meta property="og:type" content="article">
 <meta property="og:title" content="map使用实践">
 <meta property="og:url" content="http://viclab.github.io/2016/03/10/map-usage-md/index.html">
 <meta property="og:site_name" content="代碼之道">
 <meta property="og:description" content="map作为容器，使用比较方便频繁，下面主要就其赋值与插入新的数据进行总结。
-map容器添加新值map容器中储存的是pair，一个二元组。通常插入方式有两种，如下所示：1typedef std::map&amp;lt;int, std::string&amp;gt; STRING_MAP;
+map容器添加新值map容器中储存的是pair，一个key-value二元组。通常插入方式有两种，如下所示：1typedef std::map&amp;lt;int, std::string&amp;gt; STRING_MAP;
 
-insert 方法1std::pair&amp;lt;INT_MAP::iterator, bool&amp;gt; rs = im.ins">
-<meta property="og:updated_time" content="2016-03-10T03:53:32.000Z">
+insert 方法1std::pair&amp;lt;INT_MAP::iterator, bool&amp;gt; rs">
+<meta property="og:updated_time" content="2016-03-10T03:54:11.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="map使用实践">
 <meta name="twitter:description" content="map作为容器，使用比较方便频繁，下面主要就其赋值与插入新的数据进行总结。
-map容器添加新值map容器中储存的是pair，一个二元组。通常插入方式有两种，如下所示：1typedef std::map&amp;lt;int, std::string&amp;gt; STRING_MAP;
+map容器添加新值map容器中储存的是pair，一个key-value二元组。通常插入方式有两种，如下所示：1typedef std::map&amp;lt;int, std::string&amp;gt; STRING_MAP;
 
-insert 方法1std::pair&amp;lt;INT_MAP::iterator, bool&amp;gt; rs = im.ins">
+insert 方法1std::pair&amp;lt;INT_MAP::iterator, bool&amp;gt; rs">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -223,7 +223,7 @@ insert 方法1std::pair&amp;lt;INT_MAP::iterator, bool&amp;gt; rs = im.ins">
 
       
         <span itemprop="articleBody"><p>map作为容器，使用比较方便频繁，下面主要就其赋值与插入新的数据进行总结。</p>
-<h1 id="map_u5BB9_u5668_u6DFB_u52A0_u65B0_u503C"><a href="#map_u5BB9_u5668_u6DFB_u52A0_u65B0_u503C" class="headerlink" title="map容器添加新值"></a>map容器添加新值</h1><p>map容器中储存的是pair，一个<key,value>二元组。通常插入方式有两种，如下所示：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">std</span>::<span class="built_in">string</span>&gt; STRING_MAP;</span><br></pre></td></tr></table></figure></key,value></p>
+<h1 id="map_u5BB9_u5668_u6DFB_u52A0_u65B0_u503C"><a href="#map_u5BB9_u5668_u6DFB_u52A0_u65B0_u503C" class="headerlink" title="map容器添加新值"></a>map容器添加新值</h1><p>map容器中储存的是pair，一个key-value二元组。通常插入方式有两种，如下所示：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> <span class="built_in">std</span>::<span class="built_in">map</span>&lt;<span class="keyword">int</span>, <span class="built_in">std</span>::<span class="built_in">string</span>&gt; STRING_MAP;</span><br></pre></td></tr></table></figure></p>
 <ul>
 <li>insert 方法<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">std</span>::pair&lt;INT_MAP::iterator, <span class="keyword">bool</span>&gt; rs = im.insert(<span class="built_in">std</span>::make_pair(<span class="number">1</span>, <span class="string">"insert after"</span>));</span><br></pre></td></tr></table></figure>
 </li>
