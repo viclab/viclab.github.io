@@ -49,7 +49,7 @@ insert 方法1std::pair&amp;lt;STRING_MAP::iterator, bool&amp;gt;">
 map容器添加新值map容器中储存的是pair，一个key-value二元组。通常插入方式有两种，如下所示：1typedef std::map&amp;lt;int, std::string&amp;gt; STRING_MAP;
 
 insert 方法1std::pair&amp;lt;STRING_MAP::iterator, bool&amp;gt;">
-<meta property="og:updated_time" content="2016-03-10T03:55:41.000Z">
+<meta property="og:updated_time" content="2016-03-24T03:02:48.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="map使用实践">
 <meta name="twitter:description" content="map作为容器，使用比较方便频繁，下面主要就其赋值与插入新的数据进行总结。
@@ -234,6 +234,9 @@ insert 方法1std::pair&amp;lt;STRING_MAP::iterator, bool&amp;gt;">
 </li>
 </ul>
 <p>同样，对于key=1的value已经存在，再次对key=1进行赋值，则【】操作符会更新key=1的值，以对于【】操作符而言，不存在失败的说法。<br>如果map中已经存在该key，则更新该key的value值；如果不存在，则直接插入，效果同insert成功。</p>
+<blockquote>
+<p>注: 通过操作符map_[key]来取值的话，如果key不存在，则会返回一个默认的Value，并不会报错</p>
+</blockquote>
 </span>
       
     </div>
