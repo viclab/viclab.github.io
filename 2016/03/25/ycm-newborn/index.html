@@ -37,19 +37,16 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="目标系统近期在项目中有一个战斗内目标系统的需求，一开始看似一个小的需求，便做了一个简单的设计。但发现需求稍有动，实现便无法满足需求。
-重新设计实现后来的设计就是我们">
+<meta name="description" content="困扰很早就开始用VIM，VIM称为编辑器之神。确实如此。一方面，大量的快捷操作，编辑效率极高。但如果作为IDE,最薄弱也为人所诟病的是它的补全功能太弱，好在开源世界贡献了丰富的插件可以选择，从一开始用omnicomplete，觉得还可以，但仅限于字面补全，而且使用前需要借助ctag生成tag文件，文件稍有改动又要重新生成tag文件，相比于IDE还是太弱。直到后来接触了YCM，折腾了很久，总算是在公">
 <meta property="og:type" content="article">
-<meta property="og:title" content="战斗内目标系统">
-<meta property="og:url" content="http://viclab.github.io/2016/01/22/battle-target/index.html">
+<meta property="og:title" content="YCM重生">
+<meta property="og:url" content="http://viclab.github.io/2016/03/25/ycm-newborn/index.html">
 <meta property="og:site_name" content="代碼之道">
-<meta property="og:description" content="目标系统近期在项目中有一个战斗内目标系统的需求，一开始看似一个小的需求，便做了一个简单的设计。但发现需求稍有动，实现便无法满足需求。
-重新设计实现后来的设计就是我们">
-<meta property="og:updated_time" content="2016-01-22T04:50:27.000Z">
+<meta property="og:description" content="困扰很早就开始用VIM，VIM称为编辑器之神。确实如此。一方面，大量的快捷操作，编辑效率极高。但如果作为IDE,最薄弱也为人所诟病的是它的补全功能太弱，好在开源世界贡献了丰富的插件可以选择，从一开始用omnicomplete，觉得还可以，但仅限于字面补全，而且使用前需要借助ctag生成tag文件，文件稍有改动又要重新生成tag文件，相比于IDE还是太弱。直到后来接触了YCM，折腾了很久，总算是在公">
+<meta property="og:updated_time" content="2016-03-25T15:48:31.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="战斗内目标系统">
-<meta name="twitter:description" content="目标系统近期在项目中有一个战斗内目标系统的需求，一开始看似一个小的需求，便做了一个简单的设计。但发现需求稍有动，实现便无法满足需求。
-重新设计实现后来的设计就是我们">
+<meta name="twitter:title" content="YCM重生">
+<meta name="twitter:description" content="困扰很早就开始用VIM，VIM称为编辑器之神。确实如此。一方面，大量的快捷操作，编辑效率极高。但如果作为IDE,最薄弱也为人所诟病的是它的补全功能太弱，好在开源世界贡献了丰富的插件可以选择，从一开始用omnicomplete，觉得还可以，但仅限于字面补全，而且使用前需要借助ctag生成tag文件，文件稍有改动又要重新生成tag文件，相比于IDE还是太弱。直到后来接触了YCM，折腾了很久，总算是在公">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -59,7 +56,7 @@
   };
 </script>
 
-    <title> 战斗内目标系统 // 代碼之道 </title>
+    <title> YCM重生 // 代碼之道 </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -188,7 +185,7 @@
           
           
             
-              战斗内目标系统
+              YCM重生
             
           
         </h1>
@@ -197,8 +194,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2016-01-22T09:33:32+00:00" content="2016-01-22">
-            2016-01-22
+          <time itemprop="dateCreated" datetime="2016-03-25T14:43:59+00:00" content="2016-03-25">
+            2016-03-25
           </time>
         </span>
 
@@ -216,8 +213,26 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="u76EE_u6807_u7CFB_u7EDF"><a href="#u76EE_u6807_u7CFB_u7EDF" class="headerlink" title="目标系统"></a>目标系统</h1><p>近期在项目中有一个战斗内目标系统的需求，一开始看似一个小的需求，便做了一个简单的设计。<br>但发现需求稍有动，实现便无法满足需求。</p>
-<h1 id="u91CD_u65B0_u8BBE_u8BA1_u5B9E_u73B0"><a href="#u91CD_u65B0_u8BBE_u8BA1_u5B9E_u73B0" class="headerlink" title="重新设计实现"></a>重新设计实现</h1><p>后来的设计就是我们</p>
+        <span itemprop="articleBody"><h1 id="u56F0_u6270"><a href="#u56F0_u6270" class="headerlink" title="困扰"></a>困扰</h1><p>很早就开始用VIM，VIM称为编辑器之神。确实如此。一方面，大量的快捷操作，编辑效率极高。<br>但如果作为IDE,最薄弱也为人所诟病的是它的补全功能太弱，好在开源世界贡献了丰富的插件可以<br>选择，从一开始用omnicomplete，觉得还可以，但仅限于字面补全，而且使用前需要借助ctag生成tag<br>文件，文件稍有改动又要重新生成tag文件，相比于IDE还是太弱。直到后来接触了YCM，折腾了很久，<br>总算是在公司离线的开发机上装完（PS:llvm+clang,gcc等库在离线安装简直是噩梦，好在后来摸索掌握了<br>直接借助编好的库来安装，就事半功倍了）,在KL项目组时体验还很棒，后来调到Kihan之后完全不能<br>够忍受, 大量分散的头文件很多无法补全，效率大减。一段时间，这一直是一个很大的困扰。</p>
+<h1 id="u5BFB_u627E_u5386_u7A0B"><a href="#u5BFB_u627E_u5386_u7A0B" class="headerlink" title="寻找历程"></a>寻找历程</h1><p>找了一段时间后，想想干嘛那么费劲呢，直接用成熟的IDE不就结了，便考虑放弃YCM，转用eclipse，<br>用了段时间，感觉补全功能还是挺强大的，但速度真心比VIM慢多了，而且更重要的是eclipse的快捷键<br>完全用不顺手，虽然可以重新设置，但终究还是感觉很别扭，就这样，VIM和eclipse尴尬而别扭的用了<br>段时间后，发现自己还是离不开VIM，编辑的快捷键实在太熟练了。僵持了短时间后，考虑在eclipse装了<br>个vrapper（模拟vim的插件），又设置折腾了一段时间，发现还是有那么一丝欠缺。我承认其实已经做的<br>很好了，大部分VIM能有的命令它都有，只是eclipse跟开发机的同步很蛋疼，必须借助samba，而且还不太<br>稳定，这更加深了想回归VIM的想法。但苦于YCM的补全问题没有完全结局，还是在用着eclipse+vrapper.<br>本打算就这样用着，但一次偶然的发现居然让事情有了新的转机。</p>
+<h1 id="u91CD_u751F"><a href="#u91CD_u751F" class="headerlink" title="重生"></a>重生</h1><p>终于，功夫不负有心人，大量的Google爬贴之后，偶然在一个英文<a href="http://www.iauns.com/b?summary=false&amp;articles=2013_08_Vim_YouCompleteMe" target="_blank" rel="external">帖子</a><br>上看到一篇关于.ycm_extra_conf.py配置的文章。文章大致的内容就是说.ycm_extra_conf中flag<br>的配置大概有中方式:</p>
+<h2 id="u786C_u7F16_u7801"><a href="#u786C_u7F16_u7801" class="headerlink" title="硬编码"></a><em>硬编码</em></h2><p>所谓的硬编码就是说直接在.ycm_extra_conf文件中设置flags[]数组。</p>
+<blockquote>
+<p>由于是事先根据源码路径手工设置录入头文件路径，所以不免有很多遗漏，就出现部分YCM无法找到补全<br>的问题，在KL就存在这样的问题，但好在KL的头文件相对比较集中，配置几个目录基本够用，虽然也有一些无法<br>补全，但基本不影响体验。后来调到火影之后，情况就完全不同了，头文件不仅分散，还特别多,补全效果大打折扣。</p>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">flags = [</span><br><span class="line"><span class="string">'-Wall'</span>,</span><br><span class="line"><span class="string">'-Wextra'</span>,</span><br><span class="line"><span class="string">'-Werror,</span><br><span class="line">...</span><br><span class="line">'</span>-isystem<span class="string">',             # 系统路径</span><br><span class="line">'</span>/usr/include/c++<span class="string">'</span><br><span class="line">'</span>-I<span class="string">',                   # 用户路径</span><br><span class="line">'</span>./libsrc<span class="string">',</span></span><br></pre></td></tr></table></figure>
+<h2 id="u8BFB_u53D6compile_commands-json_u6587_u4EF6"><a href="#u8BFB_u53D6compile_commands-json_u6587_u4EF6" class="headerlink" title="读取compile_commands.json文件"></a><em>读取compile_commands.json文件</em></h2><blockquote>
+<p>这种是通过cmake生成compile_commands.json文件，然后.ycm_extra_conf读取该json文件，<br>准确的分析每一个源文件所在目录，因而补全十分精准，理论上补全率100%，基本上不会出现<br>之前的部分补全的情况了。具体操作如下：</p>
+<h3 id="cmake_u8BBE_u7F6E"><a href="#cmake_u8BBE_u7F6E" class="headerlink" title="cmake设置"></a>cmake设置</h3><p>cmake设置有2中方式:</p>
+<ul>
+<li>设置临时参数</li>
+</ul>
+</blockquote>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;ProjectRoot&gt;/build</span><br><span class="line">cmake .. -DCMAKE_EXPORT_COMPILE_COMMANDS=<span class="number">1</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>写CMakeList.txt文件<br>在CMakeList配置文件中加一条配置<br><code>set (DCMAKE_EXPORT_COMPILE_COMMANDS 1)</code><br>这2中方式都能生成compile_commands.json文件</li>
+</ul>
+<h3 id="u8BBE_u7F6Ecompilation_database_folder"><a href="#u8BBE_u7F6Ecompilation_database_folder" class="headerlink" title="设置compilation_database_folder"></a>设置compilation_database_folder</h3><p><code>compilaion_database_folder = &#39;./build&#39;</code><br>最后，打开cpp文件，执行:YcmRestartServer命令，生成.ycm_extra_conf.pyc文件，便大功告成了，<br>哈哈，好好享受YCM快捷的语义补全吧</p>
 </span>
       
     </div>
@@ -229,13 +244,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/29/rank-system/" rel="prev">排行榜系统</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/17/transaction/" rel="next">游戏中的逻辑事务架构设计</a>
+              <a href="/2016/03/10/map-usage-md/" rel="next">map使用实践</a>
             
           </div>
         </div>
@@ -340,7 +353,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#u76EE_u6807_u7CFB_u7EDF"><span class="nav-number">1.</span> <span class="nav-text">目标系统</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u91CD_u65B0_u8BBE_u8BA1_u5B9E_u73B0"><span class="nav-number">2.</span> <span class="nav-text">重新设计实现</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#u56F0_u6270"><span class="nav-number">1.</span> <span class="nav-text">困扰</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u5BFB_u627E_u5386_u7A0B"><span class="nav-number">2.</span> <span class="nav-text">寻找历程</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u91CD_u751F"><span class="nav-number">3.</span> <span class="nav-text">重生</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#u786C_u7F16_u7801"><span class="nav-number">3.1.</span> <span class="nav-text">硬编码</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u8BFB_u53D6compile_commands-json_u6587_u4EF6"><span class="nav-number">3.2.</span> <span class="nav-text">读取compile_commands.json文件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#cmake_u8BBE_u7F6E"><span class="nav-number">3.2.1.</span> <span class="nav-text">cmake设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#u8BBE_u7F6Ecompilation_database_folder"><span class="nav-number">3.2.2.</span> <span class="nav-text">设置compilation_database_folder</span></a></li></ol></li></ol></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
