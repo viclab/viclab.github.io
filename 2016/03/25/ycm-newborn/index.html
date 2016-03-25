@@ -43,7 +43,7 @@
 <meta property="og:url" content="http://viclab.github.io/2016/03/25/ycm-newborn/index.html">
 <meta property="og:site_name" content="代碼之道">
 <meta property="og:description" content="困扰很早就开始用VIM，VIM称为编辑器之神。确实如此。一方面，大量的快捷操作，编辑效率极高。但如果作为IDE,最薄弱也为人所诟病的是它的补全功能太弱，好在开源世界贡献了丰富的插件可以选择，从一开始用omnicomplete，觉得还可以，但仅限于字面补全，而且使用前需要借助ctag生成tag文件，文件稍有改动又要重新生成tag文件，相比于IDE还是太弱。直到后来接触了YCM，折腾了很久，总算是在公">
-<meta property="og:updated_time" content="2016-03-25T15:53:55.000Z">
+<meta property="og:updated_time" content="2016-03-25T15:57:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="YCM重生">
 <meta name="twitter:description" content="困扰很早就开始用VIM，VIM称为编辑器之神。确实如此。一方面，大量的快捷操作，编辑效率极高。但如果作为IDE,最薄弱也为人所诟病的是它的补全功能太弱，好在开源世界贡献了丰富的插件可以选择，从一开始用omnicomplete，觉得还可以，但仅限于字面补全，而且使用前需要借助ctag生成tag文件，文件稍有改动又要重新生成tag文件，相比于IDE还是太弱。直到后来接触了YCM，折腾了很久，总算是在公">
@@ -215,14 +215,14 @@
       
         <span itemprop="articleBody"><h1 id="u56F0_u6270"><a href="#u56F0_u6270" class="headerlink" title="困扰"></a>困扰</h1><p>很早就开始用VIM，VIM称为编辑器之神。确实如此。一方面，大量的快捷操作，编辑效率<br>极高。但如果作为IDE,最薄弱也为人所诟病的是它的补全功能太弱，好在开源世界贡献了<br>丰富的插件可以选择，从一开始用omnicomplete，觉得还可以，但仅限于字面补全，<br>而且使用前需要借助ctag生成tag文件，文件稍有改动又要重新生成tag文件，相比于IDE<br>还是太弱。直到后来接触了YCM，折腾了很久，总算是在公司离线的开发机上装完<br>（PS:llvm+clang,gcc等库在离线安装简直是噩梦，好在后来摸索掌握了直接借助<br>编好的库来安装，就事半功倍了）,在KL项目组时体验还很棒，后来调到Kihan之后完全不能<br>够忍受, 大量分散的头文件很多无法补全，效率大减。一段时间，这一直是一个很大的困扰。</p>
 <h1 id="u5BFB_u627E_u5386_u7A0B"><a href="#u5BFB_u627E_u5386_u7A0B" class="headerlink" title="寻找历程"></a>寻找历程</h1><p>找了一段时间后，想想干嘛那么费劲呢，直接用成熟的IDE不就结了，便考虑放弃YCM,<br>转用eclipse，用了段时间，感觉补全功能还是挺强大的，但速度真心比VIM慢多了，<br>而且更重要的是eclipse的快捷键完全用不顺手，虽然可以重新设置，但终究还是<br>感觉很别扭，就这样，VIM和eclipse尴尬而别扭的用了段时间后，发现自己还是<br>离不开VIM，编辑的快捷键实在太熟练了。僵持了短时间后，考虑在eclipse装了<br>个vrapper（模拟vim的插件），又设置折腾了一段时间，发现还是有那么一丝欠缺。<br>我承认其实已经做的很好了，大部分VIM能有的命令它都有，只是eclipse跟开发机的同步<br>很蛋疼，必须借助samba，而且还不太稳定，这更加深了想回归VIM的想法。但苦于YCM的<br>补全问题没有完全结局，还是在用着eclipse+vrapper.本打算就这样用着，但一次偶然的发现居然让事情有了新的转机。</p>
-<h1 id="u91CD_u751F"><a href="#u91CD_u751F" class="headerlink" title="重生"></a>重生</h1><p>终于，功夫不负有心人，大量的Google爬贴之后，偶然在一个英文<a href="http://www.iauns.com/b?summary=false&amp;articles=2013_08_Vim_YouCompleteMe" target="_blank" rel="external">帖子</a><br>上看到一篇关于.ycm_extra_conf.py配置的文章。文章大致的内容就是说.ycm_extra_conf<br>中flag的配置大概有中方式:</p>
+<h1 id="u91CD_u751F"><a href="#u91CD_u751F" class="headerlink" title="重生"></a>重生</h1><p>终于，功夫不负有心人，大量的Google爬贴之后，偶然在一个英文<a href="http://www.iauns.com/b?summary=false&amp;articles=2013_08_Vim_YouCompleteMe" target="_blank" rel="external">帖子</a><br>上看到一篇关于.ycm_extra_conf.py配置的文章。作者估计遇到了跟我一样头痛的问题。<br>文章大致的内容就是说.ycm_extra_conf中flag的配置大概有中方式:</p>
 <h2 id="u786C_u7F16_u7801"><a href="#u786C_u7F16_u7801" class="headerlink" title="硬编码"></a><em>硬编码</em></h2><p>所谓的硬编码就是说直接在.ycm_extra_conf文件中设置flags[]数组。</p>
 <blockquote>
 <p>由于是事先根据源码路径手工设置录入头文件路径，所以不免有很多遗漏，就出现部分<br>YCM无法找到补全的问题，在KL就存在这样的问题，但好在KL的头文件相对比较集中，<br>配置几个目录基本够用，虽然也有一些无法补全，但基本不影响体验。后来调到火影之后，<br>情况就完全不同了，头文件不仅分散，还特别多,补全效果大打折扣。</p>
 </blockquote>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">flags = [</span><br><span class="line"><span class="string">'-Wall'</span>,</span><br><span class="line"><span class="string">'-Wextra'</span>,</span><br><span class="line"><span class="string">'-Werror,</span><br><span class="line">...</span><br><span class="line">'</span>-isystem<span class="string">',             # 系统路径</span><br><span class="line">'</span>/usr/include/c++<span class="string">'</span><br><span class="line">'</span>-I<span class="string">',                   # 用户路径</span><br><span class="line">'</span>./libsrc<span class="string">',</span></span><br></pre></td></tr></table></figure>
 <h2 id="u8BFB_u53D6compile_commands-json_u6587_u4EF6"><a href="#u8BFB_u53D6compile_commands-json_u6587_u4EF6" class="headerlink" title="读取compile_commands.json文件"></a><em>读取compile_commands.json文件</em></h2><blockquote>
-<p>这种是通过cmake生成compile_commands.json文件，然后.ycm_extra_conf读取该json文件，<br>准确的分析每一个源文件所在目录，因而补全十分精准，理论上补全率100%，基本上不会出现<br>之前的部分补全的情况了。具体操作如下：</p>
+<p>这种是通过cmake生成compile_commands.json文件，然后.ycm_extra_conf读取该json文件，<br>准确的分析每一个源文件所在目录，因而补全十分精准，理论上补全率100%，基本上不会出现<br>之前的部分补全的情况了。而且刚好kihan项目用cmake编译,天助我也。具体操作如下：</p>
 <h3 id="cmake_u8BBE_u7F6E"><a href="#cmake_u8BBE_u7F6E" class="headerlink" title="cmake设置"></a>cmake设置</h3><p>cmake设置有2中方式:</p>
 <ul>
 <li>设置临时参数</li>
