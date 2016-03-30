@@ -43,7 +43,7 @@
 <meta property="og:url" content="http://viclab.github.io/2016/03/30/fixed-mem-pool-implement/index.html">
 <meta property="og:site_name" content="代碼之道">
 <meta property="og:description" content="原由由于游戏后台有大量复杂的逻辑以及数据，有些涉及到充值才能得到的道具以及游戏代币等信息，而这些数据是不能够丢失的，但游戏服务器又经常发布，不可能保证100%不出bug,而某些bug可能导致服务器进程终止，带来数据丢失，引发严重问题。为了解决这个问题，避免数据丢失，游戏服务器通常5分钟回写数据库作持久化，5分钟内的数据存储在共享内存中，这样即使进程意外退出，重启进程还是可以恢复数据。但这也带来了一">
-<meta property="og:updated_time" content="2016-03-30T08:41:11.000Z">
+<meta property="og:updated_time" content="2016-03-30T08:45:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="定长内存池的实现">
 <meta name="twitter:description" content="原由由于游戏后台有大量复杂的逻辑以及数据，有些涉及到充值才能得到的道具以及游戏代币等信息，而这些数据是不能够丢失的，但游戏服务器又经常发布，不可能保证100%不出bug,而某些bug可能导致服务器进程终止，带来数据丢失，引发严重问题。为了解决这个问题，避免数据丢失，游戏服务器通常5分钟回写数据库作持久化，5分钟内的数据存储在共享内存中，这样即使进程意外退出，重启进程还是可以恢复数据。但这也带来了一">
@@ -215,7 +215,7 @@
       
         <span itemprop="articleBody"><h1 id="u539F_u7531"><a href="#u539F_u7531" class="headerlink" title="原由"></a>原由</h1><p>由于游戏后台有大量复杂的逻辑以及数据，有些涉及到充值才能得到的道具以及游戏代币<br>等信息，而这些数据是不能够丢失的，但游戏服务器又经常发布，不可能保证100%不出bug,<br>而某些bug可能导致服务器进程终止，带来数据丢失，引发严重问题。<br>为了解决这个问题，避免数据丢失，游戏服务器通常5分钟回写数据库作持久化，5分钟内的<br>数据存储在共享内存中，这样即使进程意外退出，重启进程还是可以恢复数据。但这也带来<br>了一个新的问题,内存分配要自己来完全掌控，如何高效组织与分配共享内存中的内存呢，<br>这就是本篇文章的目的。</p>
 <h1 id="u533A_u522B"><a href="#u533A_u522B" class="headerlink" title="区别"></a>区别</h1><p>共享内存考虑到恢复，而通常恢复之后的内存地址不一定与之前的数据内存地址一样，通常<br>来说，就是不一样。所以在共享内存中不能用简单的指针（存储的是绝对地址）来构建数据<br>结构。</p>
-<h2 id="u5171_u4EAB_u5185_u5B58_u7684_u521B_u5EFA"><a href="#u5171_u4EAB_u5185_u5B58_u7684_u521B_u5EFA" class="headerlink" title="共享内存的创建"></a>共享内存的创建</h2><p>首先共享内存的创建主要有2个函数,头文件<sys shm.h=""></sys></p>
+<h2 id="u5171_u4EAB_u5185_u5B58_u7684_u521B_u5EFA"><a href="#u5171_u4EAB_u5185_u5B58_u7684_u521B_u5EFA" class="headerlink" title="共享内存的创建"></a>共享内存的创建</h2><p>首先共享内存的创建主要有2个函数,头文件<code>&lt;sys/shm.h&gt;</code></p>
 <ul>
 <li><p><code>shmget(key_t key, size_t size, int shmflg);</code></p>
 <blockquote>
