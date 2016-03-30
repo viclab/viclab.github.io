@@ -1,0 +1,633 @@
+<!doctype html>
+<html class="theme-next use-motion theme-next-mist">
+<head>
+    
+
+<meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+  <link rel="stylesheet" type="text/css" href="/vendors/fancybox/source/jquery.fancybox.css?v=2.1.5"/>
+
+
+
+
+<link rel="stylesheet" type="text/css" href="/css/main.css?v=0.4.4"/>
+
+
+    <meta name="description" content="重複就是罪惡，簡單就是美" />
+
+
+
+  <meta name="keywords" content="Hexo,next" />
+
+
+
+
+
+  <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
+
+
+<meta name="description" content="原由由于游戏后台有大量复杂的逻辑以及数据，有些涉及到充值才能得到的道具以及游戏代币等信息，而这些数据是不能够丢失的，但游戏服务器又经常发布，不可能保证100%不出bug,而某些bug可能导致服务器进程终止，带来数据丢失，引发严重问题。为了解决这个问题，避免数据丢失，游戏服务器通常5分钟回写数据库作持久化，5分钟内的数据存储在共享内存中，这样即使进程意外退出，重启进程还是可以恢复数据。但这也带来了一">
+<meta property="og:type" content="article">
+<meta property="og:title" content="定长内存池的实现">
+<meta property="og:url" content="http://viclab.github.io/2016/03/30/fixed-mem-pool-implement/index.html">
+<meta property="og:site_name" content="代碼之道">
+<meta property="og:description" content="原由由于游戏后台有大量复杂的逻辑以及数据，有些涉及到充值才能得到的道具以及游戏代币等信息，而这些数据是不能够丢失的，但游戏服务器又经常发布，不可能保证100%不出bug,而某些bug可能导致服务器进程终止，带来数据丢失，引发严重问题。为了解决这个问题，避免数据丢失，游戏服务器通常5分钟回写数据库作持久化，5分钟内的数据存储在共享内存中，这样即使进程意外退出，重启进程还是可以恢复数据。但这也带来了一">
+<meta property="og:updated_time" content="2016-03-30T08:39:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="定长内存池的实现">
+<meta name="twitter:description" content="原由由于游戏后台有大量复杂的逻辑以及数据，有些涉及到充值才能得到的道具以及游戏代币等信息，而这些数据是不能够丢失的，但游戏服务器又经常发布，不可能保证100%不出bug,而某些bug可能导致服务器进程终止，带来数据丢失，引发严重问题。为了解决这个问题，避免数据丢失，游戏服务器通常5分钟回写数据库作持久化，5分钟内的数据存储在共享内存中，这样即使进程意外退出，重启进程还是可以恢复数据。但这也带来了一">
+
+
+<script type="text/javascript" id="hexo.configuration">
+  var CONFIG = {
+    scheme: 'Mist',
+    sidebar: 'post'
+  };
+</script>
+
+    <title> 定长内存池的实现 // 代碼之道 </title>
+</head>
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+<!--[if lte IE 8]>
+  <div style=' clear: both; height: 59px; padding:0 0 0 15px; position: relative;margin:0 auto;'>
+    <a href="http://windows.microsoft.com/en-US/internet-explorer/products/ie/home?ocid=ie6_countdown_bannercode">
+      <img src="http://7u2nvr.com1.z0.glb.clouddn.com/picouterie.jpg" border="0" height="42" width="820"
+           alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today or use other browser ,like chrome firefox safari."
+           style='margin-left:auto;margin-right:auto;display: block;'/>
+    </a>
+  </div>
+<![endif]-->
+
+
+
+
+<div class="container one-column page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+        <div class="header-inner"><h1 class="site-meta">
+  <span class="logo-line-before"><i></i></span>
+  <a href="/" class="brand" rel="start">
+      <span class="logo">
+        <i class="icon-logo"></i>
+      </span>
+      <span class="site-title">代碼之道</span>
+  </a>
+  <span class="logo-line-after"><i></i></span>
+</h1>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu menu-left">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            <i class="menu-item-icon icon-home"></i> <br />
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            <i class="menu-item-icon icon-categories"></i> <br />
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            <i class="menu-item-icon icon-about"></i> <br />
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            <i class="menu-item-icon icon-archives"></i> <br />
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            <i class="menu-item-icon icon-tags"></i> <br />
+            标签
+          </a>
+        </li>
+      
+    </ul>
+  
+
+  
+    <div class="site-search">
+      
+  
+<form class="site-search-form">
+  <input type="text" id="st-search-input" class="st-search-input st-default-search-input" />
+</form>
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+    (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+    e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install', 'c-xeBoivwmrsHgNiWyK2','2.0.0');
+</script>
+
+<div class="site-search-toggle"></div>
+    </div>
+  
+</nav>
+
+
+        </div>
+    </header>
+
+    <main id="main" class="main">
+        <div class="main-inner">
+            <div id="content" class="content">
+                
+
+  <div id="posts" class="posts-expand">
+    
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+    <header class="post-header">
+
+      
+      
+        <h1 class="post-title" itemprop="name headline">
+          
+          
+            
+              定长内存池的实现
+            
+          
+        </h1>
+      
+
+      <div class="post-meta">
+        <span class="post-time">
+          发表于
+          <time itemprop="dateCreated" datetime="2016-03-30T07:43:08+00:00" content="2016-03-30">
+            2016-03-30
+          </time>
+        </span>
+
+        
+
+        
+          
+        
+      </div>
+    </header>
+
+    <div class="post-body">
+
+      
+      
+
+      
+        <span itemprop="articleBody"><h1 id="u539F_u7531"><a href="#u539F_u7531" class="headerlink" title="原由"></a>原由</h1><p>由于游戏后台有大量复杂的逻辑以及数据，有些涉及到充值才能得到的道具以及游戏代币<br>等信息，而这些数据是不能够丢失的，但游戏服务器又经常发布，不可能保证100%不出bug,<br>而某些bug可能导致服务器进程终止，带来数据丢失，引发严重问题。<br>为了解决这个问题，避免数据丢失，游戏服务器通常5分钟回写数据库作持久化，5分钟内的<br>数据存储在共享内存中，这样即使进程意外退出，重启进程还是可以恢复数据。但这也带来<br>了一个新的问题,内存分配要自己来完全掌控，如何高效组织与分配共享内存中的内存呢，<br>这就是本篇文章的目的。</p>
+<h1 id="u533A_u522B"><a href="#u533A_u522B" class="headerlink" title="区别"></a>区别</h1><p>共享内存考虑到恢复，而通常恢复之后的内存地址不一定与之前的数据内存地址一样，通常<br>来说，就是不一样。所以在共享内存中不能用简单的指针（存储的是绝对地址）来构建数据<br>结构。</p>
+<h2 id="u5171_u4EAB_u5185_u5B58_u7684_u521B_u5EFA"><a href="#u5171_u4EAB_u5185_u5B58_u7684_u521B_u5EFA" class="headerlink" title="共享内存的创建"></a>共享内存的创建</h2><p>首先共享内存的创建主要有2个函数,头文件<sys shm.h=""></sys></p>
+<ul>
+<li><p><code>shmget(key_t key, size_t size, int shmflg);</code></p>
+<blockquote>
+<p><em>说明</em>：创建一个共享内存并返回该共享内存的标识符</p>
+</blockquote>
+<ul>
+<li>key为整型值,用户指定，恢复也是依赖这个key</li>
+<li>size为申请共享内存的大小</li>
+<li>shmflg为标志位，如：IPC_CREAT | IPC_EXCL | 0644 表示key的共享内存如果存在<br>就报错(去掉IPC_EXCL则不报错，依然创建)，设置errno为EEXIST，如果不存在就创建</li>
+</ul>
+</li>
+<li><p><code>shmat(int shmid, const void *shmaddr, int shmflg);</code></p>
+<blockquote>
+<p><em>说明</em>: 连接标识符为shmid的共享内存，并将共享内存对象映射到调用进程的地址空间<br>随后可像本地空间一样访问, 返回共享内存的起始地址</p>
+<ul>
+<li>shmid为shmget返回的标识符</li>
+<li>shmaddr指定共享内存的内存地址，通常设为NULL让系统指定</li>
+<li>shmflg设置读写权限</li>
+</ul>
+</blockquote>
+</li>
+</ul>
+<p>由于shmat每次将共享内存映射到进程地址空间的虚拟地址都不一样，所以，这决定了在共享<br>内存不能使用普通的指针（绝对地址）来设计内存池的结构。</p>
+<h1 id="u5B9E_u73B0"><a href="#u5B9E_u73B0" class="headerlink" title="实现"></a>实现</h1><p><em>虽然shmat每次映射的共享内存的起始地址不一样，但在共享内部的相对地址并没有改变</em>,<br>基于这一特点，在共享内存内部可以使用偏移量pos来记录在共享内存的相对地址。基于这<br>样的要点来设计共享内存，思路就清晰了。</p>
+<h2 id="u5185_u5B58_u6C60_u7ED3_u6784"><a href="#u5185_u5B58_u6C60_u7ED3_u6784" class="headerlink" title="内存池结构"></a>内存池结构</h2><p>内存池为头部和数据部分，数据部分由多个定长节点构成，定义如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 内存池头信息 */</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">struct</span> MemPoolHeader</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="comment">/* 最大可分配大小 */</span></span><br><span class="line">    	<span class="keyword">size_t</span> max_size;</span><br><span class="line">        <span class="comment">/* 最大节点数 */</span></span><br><span class="line">        <span class="keyword">uint32_t</span> max_node;</span><br><span class="line">        <span class="comment">/* 节点实际大小 */</span></span><br><span class="line">        <span class="keyword">size_t</span> node_size;</span><br><span class="line">        <span class="comment">/* 块大小 */</span></span><br><span class="line">        <span class="keyword">size_t</span> block_size;</span><br><span class="line">        <span class="comment">/* 已分配块数 */</span></span><br><span class="line">        <span class="keyword">size_t</span> alloc_block;</span><br><span class="line">        <span class="comment">/* 已分配空间大小 */</span></span><br><span class="line">        <span class="keyword">size_t</span> alloc_size;</span><br><span class="line">        <span class="comment">/* 空闲块链 */</span></span><br><span class="line">        <span class="keyword">size_t</span> free_list;</span><br><span class="line">    &#125; Header;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/* 分配块结构 */</span></span><br><span class="line">    <span class="keyword">typedef</span> <span class="keyword">struct</span> AllocBlock</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">/* 偏移量 */</span></span><br><span class="line">        <span class="keyword">size_t</span> next;</span><br><span class="line">        <span class="comment">/* 存储用户自定义数据部分 */</span></span><br><span class="line">        <span class="keyword">char</span> node[<span class="number">0</span>];       </span><br><span class="line">    &#125; Block;</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>注：AllocBlock中的node为用户自定义数据的起始位置，AllocBlock的实际大小会在Init<br>时根据offsetof(AllocBlock, node) + node_size按照8B对其然后存在Header的block_size<br>里，也就是AllocBlock块的实际大小，定长也指的是这个定长。</p>
+</blockquote>
+<p>再说一下在整个实现中极其重要的2个方法:<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">inline</span> size_t <span class="title">Ref</span><span class="params">(<span class="keyword">void</span>* p)</span> <span class="keyword">const</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> (<span class="keyword">size_t</span>)((<span class="keyword">intptr_t</span>)p -(<span class="keyword">intptr_t</span>)(header_));</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">inline</span> <span class="keyword">void</span>* <span class="title">Deref</span><span class="params">(size_t pos)</span> <span class="keyword">const</span></span><br><span class="line"></span>&#123;</span><br><span class="line">	<span class="keyword">return</span> ((<span class="keyword">char</span>*)header_ + pos);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<ul>
+<li>Ref: 由指针位置p计算相对于header_的偏移量</li>
+<li>Deref: 由相对位置计算实际内存地址<br>这里贴出最主要的几个方法的实现吧<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 初始化</span></span><br><span class="line"><span class="keyword">int</span> FixedMemPool::Init(<span class="keyword">void</span>* mem, <span class="keyword">uint32_t</span> max_node, <span class="keyword">size_t</span> node_size, <span class="keyword">bool</span> recovery)</span><br><span class="line">&#123;</span><br><span class="line">    return_fail_if_null(mem, -<span class="number">1</span>);</span><br><span class="line">    header_ = (Header*)mem;</span><br><span class="line">    <span class="keyword">if</span> (recovery)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 内存池头信息验证错误</span></span><br><span class="line">        <span class="keyword">if</span> (!CheckHeaderValid(header_, max_node, node_size))</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"recover MemPool failed"</span> &lt;&lt; <span class="built_in">std</span>::endl;</span><br><span class="line">            <span class="keyword">return</span> ERR_RECOVERY;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="comment">// 初始化内存池头</span></span><br><span class="line">    	header_-&gt;max_size = GetAllocSize(max_node, node_size);</span><br><span class="line">        header_-&gt;max_node = max_node;</span><br><span class="line">        header_-&gt;node_size = node_size;</span><br><span class="line">        header_-&gt;block_size = GetBlockSize(node_size);</span><br><span class="line">        header_-&gt;alloc_block = <span class="number">0</span>;</span><br><span class="line">        header_-&gt;alloc_size = <span class="keyword">sizeof</span>(Header);</span><br><span class="line">        header_-&gt;free_list = INVALID_PTR;</span><br><span class="line">    &#125;</span><br><span class="line">    data_ = (<span class="keyword">char</span>*)header_ + <span class="keyword">sizeof</span>(Header);</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 分配内存块</span></span><br><span class="line"><span class="keyword">void</span>* FixedMemPool::Alloc(<span class="keyword">bool</span> zero)</span><br><span class="line">&#123;</span><br><span class="line">    Block *p = GetFreeBlock();</span><br><span class="line">    <span class="comment">// 内存池中分配块</span></span><br><span class="line">    <span class="keyword">if</span> (!p)</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="comment">// 内存池已满</span></span><br><span class="line">    	<span class="keyword">if</span> (header_-&gt;alloc_block + <span class="number">1</span> &gt; header_-&gt;max_node)</span><br><span class="line">    	&#123;</span><br><span class="line">    		<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"No enough memory for new alloc"</span> &lt;&lt; <span class="built_in">std</span>::endl;</span><br><span class="line">    		<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    	&#125;</span><br><span class="line">    	<span class="comment">// 内存池中分配块</span></span><br><span class="line">    	p = (Block*)Deref(header_-&gt;alloc_size);</span><br><span class="line">    	header_-&gt;alloc_block += <span class="number">1</span>;</span><br><span class="line">    	header_-&gt;alloc_size += header_-&gt;block_size;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!IsValidBlock(p))</span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"Alloc error, Block alloc failed"</span> &lt;&lt; <span class="built_in">std</span>::endl;</span><br><span class="line">    	<span class="keyword">return</span> <span class="literal">NULL</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (zero)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">memset</span>(p, <span class="number">0</span>, header_-&gt;block_size);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    p-&gt;next = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> p-&gt;node;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 回收内存块</span></span><br><span class="line"><span class="keyword">int</span> FixedMemPool::Free(<span class="keyword">void</span>* node)</span><br><span class="line">&#123;</span><br><span class="line">    Block* block = (Block*)((<span class="keyword">intptr_t</span>) node - offsetof(Block, node));</span><br><span class="line">    <span class="keyword">if</span> (IsUsedBlock(block))</span><br><span class="line">    &#123;</span><br><span class="line">    	block-&gt;next = header_-&gt;free_list;</span><br><span class="line">    	header_-&gt;free_list = Ref(block);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">    	<span class="built_in">std</span>::<span class="built_in">cout</span> &lt;&lt; <span class="string">"free node error，node is not valid or used"</span> &lt;&lt; <span class="built_in">std</span>::endl;</span><br><span class="line">    	<span class="keyword">return</span> -<span class="number">1</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</span>
+      
+    </div>
+
+    <footer class="post-footer">
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2016/03/30/head-include-problem.1/" rel="next">C++头文件互相包含问题</a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+            </div>
+
+            
+
+            
+              <div class="comments" id="comments">
+                
+              </div>
+            
+        </div>
+
+        
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" src="/images/default_avatar.jpg" alt="大唐歲月" itemprop="image"/>
+          <p class="site-author-name" itemprop="name">大唐歲月</p>
+        </div>
+        <p class="site-description motion-element" itemprop="description">重複就是罪惡，簡單就是美</p>
+        <nav class="site-state motion-element">
+          <div class="site-state-item site-state-posts">
+            <a href="/archives">
+              <span class="site-state-item-count">10</span>
+              <span class="site-state-item-name">日志</span>
+            </a>
+          </div>
+
+          <div class="site-state-item site-state-categories">
+            <a href="/categories">
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">分类</span>
+              </a>
+          </div>
+
+          <div class="site-state-item site-state-tags">
+            <a href="/tags">
+              <span class="site-state-item-count">0</span>
+              <span class="site-state-item-name">标签</span>
+              </a>
+          </div>
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+      </section>
+
+      
+        <section class="post-toc-wrap sidebar-panel-active">
+          <div class="post-toc-indicator-top post-toc-indicator"></div>
+          <div class="post-toc">
+            
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#u539F_u7531"><span class="nav-number">1.</span> <span class="nav-text">原由</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u533A_u522B"><span class="nav-number">2.</span> <span class="nav-text">区别</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#u5171_u4EAB_u5185_u5B58_u7684_u521B_u5EFA"><span class="nav-number">2.1.</span> <span class="nav-text">共享内存的创建</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u5B9E_u73B0"><span class="nav-number">3.</span> <span class="nav-text">实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#u5185_u5B58_u6C60_u7ED3_u6784"><span class="nav-number">3.1.</span> <span class="nav-text">内存池结构</span></a></li></ol></li></ol></div>
+            
+          </div>
+          <div class="post-toc-indicator-bottom post-toc-indicator"></div>
+        </section>
+      
+
+    </div>
+  </aside>
+
+
+    </main>
+
+    <footer id="footer" class="footer">
+        <div class="footer-inner">
+            <div class="copyright" >
+  
+  &copy; &nbsp; 
+  <span itemprop="copyrightYear">2016</span>
+  <span class="with-love">
+    <i class="icon-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">大唐歲月</span>
+</div>
+
+<div class="powered-by">
+  由 <a class="theme-link" href="http://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+
+        </div>
+    </footer>
+
+    <div class="back-to-top"></div>
+</div>
+
+<script type="text/javascript" src="/vendors/jquery/index.js?v=2.1.3"></script>
+
+  
+  
+  
+    
+    
+
+  
+
+
+  
+  
+  <script type="text/javascript" src="/vendors/fancybox/source/jquery.fancybox.pack.js"></script>
+  <script type="text/javascript" src="/js/fancy-box.js?v=0.4.4"></script>
+
+
+  <script type="text/javascript" src="/js/helpers.js?v=0.4.4"></script>
+  
+
+  <script type="text/javascript" src="/vendors/velocity/velocity.min.js"></script>
+  <script type="text/javascript" src="/vendors/velocity/velocity.ui.min.js"></script>
+
+  <script type="text/javascript" src="/js/motion_global.js?v=0.4.4" id="motion.global"></script>
+
+
+
+  <script type="text/javascript" src="/js/search-toggle.js"></script>
+
+
+  
+<script type="text/javascript" src="/js/bootstrap.scrollspy.js?v=0.4.4" id="bootstrap.scrollspy.custom"></script>
+
+
+<script type="text/javascript" id="sidebar.toc.highlight">
+  $(document).ready(function () {
+    var tocSelector = '.post-toc';
+    var $tocSelector = $(tocSelector);
+    var activeCurrentSelector = '.active-current';
+
+    $tocSelector
+      .on('activate.bs.scrollspy', function () {
+        var $currentActiveElement = $(tocSelector + ' .active').last();
+
+        removeCurrentActiveClass();
+        $currentActiveElement.addClass('active-current');
+
+        $tocSelector[0].scrollTop = $currentActiveElement.position().top;
+      })
+      .on('clear.bs.scrollspy', function () {
+        removeCurrentActiveClass();
+      });
+
+    function removeCurrentActiveClass () {
+      $(tocSelector + ' ' + activeCurrentSelector)
+        .removeClass(activeCurrentSelector.substring(1));
+    }
+
+    function processTOC () {
+      getTOCMaxHeight();
+      toggleTOCOverflowIndicators();
+    }
+
+    function getTOCMaxHeight () {
+      var height = $('.sidebar').height() -
+                   $tocSelector.position().top -
+                   $('.post-toc-indicator-bottom').height();
+
+      $tocSelector.css('height', height);
+
+      return height;
+    }
+
+    function toggleTOCOverflowIndicators () {
+      tocOverflowIndicator(
+        '.post-toc-indicator-top',
+        $tocSelector.scrollTop() > 0 ? 'show' : 'hide'
+      );
+
+      tocOverflowIndicator(
+        '.post-toc-indicator-bottom',
+        $tocSelector.scrollTop() >= $tocSelector.find('ol').height() - $tocSelector.height() ? 'hide' : 'show'
+      )
+    }
+
+    $(document).on('sidebar.motion.complete', function () {
+      processTOC();
+    });
+
+    $('body').scrollspy({ target: tocSelector });
+    $(window).on('resize', function () {
+      if ( $('.sidebar').hasClass('sidebar-active') ) {
+        processTOC();
+      }
+    });
+
+    onScroll($tocSelector);
+
+    function onScroll (element) {
+      element.on('mousewheel DOMMouseScroll', function (event) {
+          var oe = event.originalEvent;
+          var delta = oe.wheelDelta || -oe.detail;
+
+          this.scrollTop += ( delta < 0 ? 1 : -1 ) * 30;
+          event.preventDefault();
+
+          toggleTOCOverflowIndicators();
+      });
+    }
+
+    function tocOverflowIndicator (indicator, action) {
+      var $indicator = $(indicator);
+      var opacity = action === 'show' ? 0.4 : 0;
+      $indicator.velocity ?
+        $indicator.velocity('stop').velocity({
+          opacity: opacity
+        }, { duration: 100 }) :
+        $indicator.stop().animate({
+          opacity: opacity
+        }, 100);
+    }
+
+  });
+</script>
+
+<script type="text/javascript" id="sidebar.nav">
+  $(document).ready(function () {
+    var html = $('html');
+    var TAB_ANIMATE_DURATION = 200;
+    var hasVelocity = $.isFunction(html.velocity);
+
+    $('.sidebar-nav li').on('click', function () {
+      var item = $(this);
+      var activeTabClassName = 'sidebar-nav-active';
+      var activePanelClassName = 'sidebar-panel-active';
+      if (item.hasClass(activeTabClassName)) {
+        return;
+      }
+
+      var currentTarget = $('.' + activePanelClassName);
+      var target = $('.' + item.data('target'));
+
+      hasVelocity ?
+        currentTarget.velocity('transition.slideUpOut', TAB_ANIMATE_DURATION, function () {
+          target
+            .velocity('stop')
+            .velocity('transition.slideDownIn', TAB_ANIMATE_DURATION)
+            .addClass(activePanelClassName);
+        }) :
+        currentTarget.animate({ opacity: 0 }, TAB_ANIMATE_DURATION, function () {
+          currentTarget.hide();
+          target
+            .stop()
+            .css({'opacity': 0, 'display': 'block'})
+            .animate({ opacity: 1 }, TAB_ANIMATE_DURATION, function () {
+              currentTarget.removeClass(activePanelClassName);
+              target.addClass(activePanelClassName);
+            });
+        });
+
+      item.siblings().removeClass(activeTabClassName);
+      item.addClass(activeTabClassName);
+    });
+
+    $('.post-toc a').on('click', function (e) {
+      e.preventDefault();
+      var targetSelector = escapeSelector(this.getAttribute('href'));
+      var offset = $(targetSelector).offset().top;
+      hasVelocity ?
+        html.velocity('stop').velocity('scroll', {
+          offset: offset  + 'px',
+          mobileHA: false
+        }) :
+        $('html, body').stop().animate({
+          scrollTop: offset
+        }, 500);
+    });
+
+    // Expand sidebar on post detail page by default, when post has a toc.
+    var $tocContent = $('.post-toc-content');
+    if (isDesktop() && CONFIG.sidebar === 'post') {
+      if ($tocContent.length > 0 && $tocContent.html().trim().length > 0) {
+        displaySidebar();
+      }
+    }
+  });
+</script>
+
+
+
+<script type="text/javascript">
+    $(document).ready(function () {
+        if (CONFIG.sidebar === 'always') {
+            displaySidebar();
+        }
+    });
+</script>
+
+
+
+
+
+
+
+
+<!-- lazyload -->
+<script type="text/javascript" src="/js/lazyload.js"></script>
+<script type="text/javascript">
+    jQuery(function () {
+        jQuery("#posts img").lazyload({
+            placeholder: "/images/loading.gif",
+            effect: "fadeIn"
+        });
+    });
+</script>
+</body>
+</html>
