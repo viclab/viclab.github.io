@@ -37,25 +37,22 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在
-项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。
-状态查询在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地
-所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。12svn st">
+<meta name="description" content="公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。
+
+状态查询在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。12svn st">
 <meta property="og:type" content="article">
 <meta property="og:title" content="svn用法总结">
 <meta property="og:url" content="http://viclab.github.io/2016/07/29/svn-book/index.html">
 <meta property="og:site_name" content="代碼之道">
-<meta property="og:description" content="公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在
-项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。
-状态查询在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地
-所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。12svn st">
-<meta property="og:updated_time" content="2016-07-29T13:49:07.000Z">
+<meta property="og:description" content="公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。
+
+状态查询在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。12svn st">
+<meta property="og:updated_time" content="2016-07-29T13:51:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="svn用法总结">
-<meta name="twitter:description" content="公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在
-项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。
-状态查询在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地
-所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。12svn st">
+<meta name="twitter:description" content="公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。
+
+状态查询在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。12svn st">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -222,14 +219,12 @@
       
 
       
-        <span itemprop="articleBody"><pre><code>公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在
-</code></pre><p>项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。<br>尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。</p>
-<h2 id="u72B6_u6001_u67E5_u8BE2"><a href="#u72B6_u6001_u67E5_u8BE2" class="headerlink" title="状态查询"></a>状态查询</h2><pre><code>在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地
-</code></pre><p>所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn st          <span class="comment"># 本地所有文件的修改状态，包括非版本库中的文件及目录</span></span><br><span class="line">svn st -q       <span class="comment"># 本地所有版本库中的文件及目录的修改状态</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="u63D0_u4EA4"><a href="#u63D0_u4EA4" class="headerlink" title="提交"></a>提交</h2><pre><code>按需提交是比较好的习惯，而且提交前再次确认一下某个重点关注的文件的修改内容
-</code></pre><p>也是好习惯。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn diff [要关注的文件]     <span class="comment"># svn会打印出本地修改与版本库中的差异</span></span><br><span class="line">svn ci -m <span class="string">"提交说明"</span> [要提交的文件]     <span class="comment"># 默认提交当前目录所有版本库修改</span></span><br></pre></td></tr></table></figure></p>
-<h2 id="u5408_u5E76"><a href="#u5408_u5E76" class="headerlink" title="合并"></a>合并</h2><pre><code>合并是个比较复杂的操作，通常最好在操作前有比较明确的认识，比如先确定是全量
-</code></pre><p>合并还是部分合并，是branch-》trunk，还是trunk-》branch，以及合并之后的冲突处理。<br>    一般全量和并操作起来比较方便，只是冲突比较多，需要花点儿时间去处理冲突。全量<br>合并按方向又细分为2种。</p>
+        <span itemprop="articleBody"><blockquote>
+<p>公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在<br>项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。<br>尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。</p>
+</blockquote>
+<h2 id="u72B6_u6001_u67E5_u8BE2"><a href="#u72B6_u6001_u67E5_u8BE2" class="headerlink" title="状态查询"></a>状态查询</h2><p>在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地<br>所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn st          <span class="comment"># 本地所有文件的修改状态，包括非版本库中的文件及目录</span></span><br><span class="line">svn st -q       <span class="comment"># 本地所有版本库中的文件及目录的修改状态</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="u63D0_u4EA4"><a href="#u63D0_u4EA4" class="headerlink" title="提交"></a>提交</h2><p>按需提交是比较好的习惯，而且提交前再次确认一下某个重点关注的文件的修改内容<br>也是好习惯。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn diff [要关注的文件]     <span class="comment"># svn会打印出本地修改与版本库中的差异</span></span><br><span class="line">svn ci -m <span class="string">"提交说明"</span> [要提交的文件]     <span class="comment"># 默认提交当前目录所有版本库修改</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="u5408_u5E76"><a href="#u5408_u5E76" class="headerlink" title="合并"></a>合并</h2><p>合并是个比较复杂的操作，通常最好在操作前有比较明确的认识，比如先确定是全量<br>合并还是部分合并，是branch-》trunk，还是trunk-》branch，以及合并之后的冲突处理。<br>一般全量和并操作起来比较方便，只是冲突比较多，需要花点儿时间去处理冲突。全量<br>合并按方向又细分为2种。</p>
 <h3 id="branch-_26gt_3Btrunk"><a href="#branch-_26gt_3Btrunk" class="headerlink" title="branch-&gt;trunk"></a>branch-&gt;trunk</h3><p>这种合并svn直接提供了一种合并选项，合并起来比较方便。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;trunk目录&gt;</span><br><span class="line">svn merge <span class="variable">$SVR</span>/branches/KiHan04 --reintegrate       <span class="comment"># reintegrate分支到trunk专用</span></span><br></pre></td></tr></table></figure></p>
 <p>但这种合并并不是任何时候都奏效的，只能全量合并，部分合并会提示错误如下：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">svn</span>: <span class="attribute">E195016</span>: '<span class="attribute">http</span>:<span class="comment">//tc-svn.tencent.com/ied/ied_kihan_rep/server_proj/branches/</span></span><br><span class="line">KiHan04/server/zonesvr<span class="variable">@112931</span><span class="string">' must be ancestrally related to '</span><span class="attribute">http</span>:<span class="comment">//tc-svn.tencent.com/ied/ied_kihan_rep/server_proj/trunk@112831'</span></span><br></pre></td></tr></table></figure></p>
 <p>提示找不到依赖的问题，这个时候 就需要另外一种手动合并的方式。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;trunk目录&gt;</span><br><span class="line">svn merge -r r1:r2 <span class="variable">$SVR</span>/branches/KiHan04 [project_dir]  <span class="comment"># 合并r1~r2所有提交</span></span><br></pre></td></tr></table></figure></p>
