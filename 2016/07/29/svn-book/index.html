@@ -37,28 +37,25 @@
   <link rel="shorticon icon" type="image/x-icon" href="/favicon.ico?v=0.4.4" />
 
 
-<meta name="description" content="单例模式  从设计模式的角度上来看，单例模式是最为常见也应用最广的模式。它的原理其实很简单，就是在整个作用域里只允许也只有一个实例在运行。引用《设计模式》对单例模式意图的描述，就是
-
-保证一个类只有一个实例，并提供一个访问它的全局访问点
-
-单例实现  通常实现一个单例很简单，如下：12345678910class Singleton &amp;#123;public:    static Singleto">
+<meta name="description" content="公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在
+项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。
+状态查询在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地
+所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。12svn st">
 <meta property="og:type" content="article">
-<meta property="og:title" content="单例模式的应用">
-<meta property="og:url" content="http://viclab.github.io/2015/12/17/singleton-model/index.html">
+<meta property="og:title" content="svn用法总结">
+<meta property="og:url" content="http://viclab.github.io/2016/07/29/svn-book/index.html">
 <meta property="og:site_name" content="代碼之道">
-<meta property="og:description" content="单例模式  从设计模式的角度上来看，单例模式是最为常见也应用最广的模式。它的原理其实很简单，就是在整个作用域里只允许也只有一个实例在运行。引用《设计模式》对单例模式意图的描述，就是
-
-保证一个类只有一个实例，并提供一个访问它的全局访问点
-
-单例实现  通常实现一个单例很简单，如下：12345678910class Singleton &amp;#123;public:    static Singleto">
-<meta property="og:updated_time" content="2016-01-26T08:29:14.000Z">
+<meta property="og:description" content="公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在
+项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。
+状态查询在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地
+所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。12svn st">
+<meta property="og:updated_time" content="2016-07-29T13:49:07.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="单例模式的应用">
-<meta name="twitter:description" content="单例模式  从设计模式的角度上来看，单例模式是最为常见也应用最广的模式。它的原理其实很简单，就是在整个作用域里只允许也只有一个实例在运行。引用《设计模式》对单例模式意图的描述，就是
-
-保证一个类只有一个实例，并提供一个访问它的全局访问点
-
-单例实现  通常实现一个单例很简单，如下：12345678910class Singleton &amp;#123;public:    static Singleto">
+<meta name="twitter:title" content="svn用法总结">
+<meta name="twitter:description" content="公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在
+项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。
+状态查询在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地
+所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。12svn st">
 
 
 <script type="text/javascript" id="hexo.configuration">
@@ -68,7 +65,7 @@
   };
 </script>
 
-    <title> 单例模式的应用 // 代碼之道 </title>
+    <title> svn用法总结 // 代碼之道 </title>
 </head>
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 <!--[if lte IE 8]>
@@ -197,7 +194,7 @@
           
           
             
-              单例模式的应用
+              svn用法总结
             
           
         </h1>
@@ -206,8 +203,8 @@
       <div class="post-meta">
         <span class="post-time">
           发表于
-          <time itemprop="dateCreated" datetime="2015-12-17T09:33:32+00:00" content="2015-12-17">
-            2015-12-17
+          <time itemprop="dateCreated" datetime="2016-07-29T12:29:01+00:00" content="2016-07-29">
+            2016-07-29
           </time>
         </span>
 
@@ -225,17 +222,43 @@
       
 
       
-        <span itemprop="articleBody"><h1 id="u5355_u4F8B_u6A21_u5F0F"><a href="#u5355_u4F8B_u6A21_u5F0F" class="headerlink" title="单例模式"></a>单例模式</h1><p>  从设计模式的角度上来看，单例模式是最为常见也应用最广的模式。<br>它的原理其实很简单，就是在整个作用域里只允许也只有一个实例在运行。<br>引用《设计模式》对单例模式意图的描述，就是</p>
+        <span itemprop="articleBody"><pre><code>公司版本管理一般比较常用svn，但一直仅限于很简单的svn用法，浅尝辄止。后来在
+</code></pre><p>项目开发中逐渐用到了merge，觉得还是实践中也还是积累了不少经验需要记录下来备忘。<br>尤其是网上搜出的svn教程完全没法儿读，乱七八糟，很费时间。</p>
+<h2 id="u72B6_u6001_u67E5_u8BE2"><a href="#u72B6_u6001_u67E5_u8BE2" class="headerlink" title="状态查询"></a>状态查询</h2><pre><code>在提交前，先查询一下本地的修改状态是比较好的习惯，因为有些场景并不需要提交本地
+</code></pre><p>所有修改。这个时候可以考虑先查询一下所有的本地修改，然后按需提交。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn st          <span class="comment"># 本地所有文件的修改状态，包括非版本库中的文件及目录</span></span><br><span class="line">svn st -q       <span class="comment"># 本地所有版本库中的文件及目录的修改状态</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="u63D0_u4EA4"><a href="#u63D0_u4EA4" class="headerlink" title="提交"></a>提交</h2><pre><code>按需提交是比较好的习惯，而且提交前再次确认一下某个重点关注的文件的修改内容
+</code></pre><p>也是好习惯。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn diff [要关注的文件]     <span class="comment"># svn会打印出本地修改与版本库中的差异</span></span><br><span class="line">svn ci -m <span class="string">"提交说明"</span> [要提交的文件]     <span class="comment"># 默认提交当前目录所有版本库修改</span></span><br></pre></td></tr></table></figure></p>
+<h2 id="u5408_u5E76"><a href="#u5408_u5E76" class="headerlink" title="合并"></a>合并</h2><pre><code>合并是个比较复杂的操作，通常最好在操作前有比较明确的认识，比如先确定是全量
+</code></pre><p>合并还是部分合并，是branch-》trunk，还是trunk-》branch，以及合并之后的冲突处理。<br>    一般全量和并操作起来比较方便，只是冲突比较多，需要花点儿时间去处理冲突。全量<br>合并按方向又细分为2种。</p>
+<h3 id="branch-_26gt_3Btrunk"><a href="#branch-_26gt_3Btrunk" class="headerlink" title="branch-&gt;trunk"></a>branch-&gt;trunk</h3><p>这种合并svn直接提供了一种合并选项，合并起来比较方便。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;trunk目录&gt;</span><br><span class="line">svn merge <span class="variable">$SVR</span>/branches/KiHan04 --reintegrate       <span class="comment"># reintegrate分支到trunk专用</span></span><br></pre></td></tr></table></figure></p>
+<p>但这种合并并不是任何时候都奏效的，只能全量合并，部分合并会提示错误如下：<br><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">svn</span>: <span class="attribute">E195016</span>: '<span class="attribute">http</span>:<span class="comment">//tc-svn.tencent.com/ied/ied_kihan_rep/server_proj/branches/</span></span><br><span class="line">KiHan04/server/zonesvr<span class="variable">@112931</span><span class="string">' must be ancestrally related to '</span><span class="attribute">http</span>:<span class="comment">//tc-svn.tencent.com/ied/ied_kihan_rep/server_proj/trunk@112831'</span></span><br></pre></td></tr></table></figure></p>
+<p>提示找不到依赖的问题，这个时候 就需要另外一种手动合并的方式。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> &lt;trunk目录&gt;</span><br><span class="line">svn merge -r r1:r2 <span class="variable">$SVR</span>/branches/KiHan04 [project_dir]  <span class="comment"># 合并r1~r2所有提交</span></span><br></pre></td></tr></table></figure></p>
+<p>其中project_dir指的是跟KiHan04对应的项目主目录，一般就是trunk。r2一般就是HEAD，<br>而r1则是分支从主干刚拉出的那个版本号。这个一般是很难去查和记录的，例如一个大<br>版本项目组中多人提交，直接去查太低效。幸亏有个好方法可以直接查询出来。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn <span class="built_in">log</span> -q <span class="variable">$SVR</span>/branches/KiHan04 --stop-on-copy</span><br></pre></td></tr></table></figure></p>
+<p>最底下一条log的版本号就是拉出分支时版本号，用这个作为手动合并的其实版本号r1就是了。</p>
 <blockquote>
-<p>保证一个类只有一个实例，并提供一个访问它的全局访问点</p>
+<p>注意: 一般全量合并冲突会比较多，可以先加参数<code>--dry-run</code>来只探测合并的冲突数，而<br>不真正合并, 可以用这个提前检测有多少冲突。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">svn merge -r r1:HEAD <span class="variable">$SVR</span>/branches/KiHan04/XXX/XXX [trunk/XXX/XXX] --dry-run</span><br></pre></td></tr></table></figure></p>
 </blockquote>
-<h1 id="u5355_u4F8B_u5B9E_u73B0"><a href="#u5355_u4F8B_u5B9E_u73B0" class="headerlink" title="单例实现"></a>单例实现</h1><p>  通常实现一个单例很简单，如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> Singleton &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">static</span> Singleton* <span class="title">Instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">if</span> (!_instance) &#123;</span><br><span class="line">            _instance = <span class="keyword">new</span> Singleton;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="keyword">static</span> Singleton* _instance;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure></p>
-<p>  其实就是将类构造函数私有化，使不能直接调用构造函数来创建实例，而是通过特定的函数来获取实例。<br>但这样通常不够灵活，因为在项目中，需要用到单例模式的地方可能很多，如果每个用到的地方都写一个<br>单例，很不方便。所以，有两种方法来使得大量使用单例是更加便利：</p>
-<h2 id="u7EE7_u627F"><a href="#u7EE7_u627F" class="headerlink" title="继承"></a>继承</h2><p>  可以给单例作为一个超类，需要用到单例的类继承自这个超类，然后<br>  &lt;待续&gt;</p>
-<h2 id="u6CDB_u578B"><a href="#u6CDB_u578B" class="headerlink" title="泛型"></a>泛型</h2><p>  将单例模式定义为一个泛型，需要用到的地方，直接具象化为需要用到的单例，这种方式比较。<br>而且很灵活，给单例作为一种特性，如果需要则具象化需要这种特性的类。这样，将类于单例实现完全分开。</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">template</span> &lt;<span class="keyword">class</span> T&gt;                                                                                                                  </span><br><span class="line"><span class="keyword">class</span> Singleton : <span class="keyword">public</span> NonCopyable &#123;</span><br><span class="line"> <span class="keyword">private</span>:</span><br><span class="line">     <span class="keyword">static</span> T &amp; instance;</span><br><span class="line">    <span class="comment">// include this to provoke instantiation at pre-execution time</span></span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">void</span> <span class="title">use</span><span class="params">(T <span class="keyword">const</span> &amp;)</span> </span>&#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">static</span> T &amp; <span class="title">get_instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">static</span> T t;</span><br><span class="line">        <span class="comment">// refer to instance, causing it to be instantiated (and</span></span><br><span class="line">        <span class="comment">// initialized at startup on working compilers)</span></span><br><span class="line">        <span class="comment">// assert(! detail::singleton_wrapper&lt;T&gt;::m_is_destroyed);</span></span><br><span class="line">        use(instance);</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">static_cast</span>&lt;T &amp;&gt;(t);</span><br><span class="line">    &#125;   </span><br><span class="line"> <span class="keyword">public</span>:</span><br><span class="line">    <span class="function"><span class="keyword">static</span> T &amp; <span class="title">get_mutable_instance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">return</span> get_instance();</span><br><span class="line">    &#125;   </span><br><span class="line">    <span class="function"><span class="keyword">static</span> <span class="keyword">const</span> T &amp; <span class="title">get_const_instance</span><span class="params">()</span></span>&#123;</span><br><span class="line">        <span class="keyword">return</span> get_instance();</span><br><span class="line">    &#125;   </span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">template</span>&lt;<span class="keyword">class</span> T&gt;</span><br><span class="line">T&amp; Singleton&lt;T&gt;::instance = Singleton&lt;T&gt;::get_instance();</span><br><span class="line"></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>在需要用到单例的类A中可以这样来使A支持单例特性<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">typedef</span> Singleton&lt;A&gt; ASingleton;</span><br></pre></td></tr></table></figure></p>
-<p>```</p>
+<h3 id="trunk-_26gt_3Bbranch"><a href="#trunk-_26gt_3Bbranch" class="headerlink" title="trunk-&gt;branch"></a>trunk-&gt;branch</h3><p>一般trunk到branch属于反向合并。在图形化界面反向合并需要注意的一点就是从在合并并解决完冲突后，在提交列表中<br>要去掉所有的目录，就能避免反向提交失败的问题。<br>命令行下是否能规避反向提交目录失败的问题还有待验证。</p>
+<h2 id="u89E3_u51B3_u51B2_u7A81"><a href="#u89E3_u51B3_u51B2_u7A81" class="headerlink" title="解决冲突"></a>解决冲突</h2><p>一般在合并完后肯定会有冲突，如何高效解决多个冲突。</p>
+<ul>
+<li>首先在产生冲突的时候一直按p</li>
+<li>vi 所有冲突的文件列表</li>
+<li>识别并去掉&lt;&lt;&lt;&lt; ==== &gt;&gt;&gt;&gt; 等标志</li>
+<li>然后svn resolved 所有冲突文件列表</li>
+<li>svn st -q 确认并提交</li>
+</ul>
+<p>eg：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;&lt;&lt;&lt;&lt;&lt;&lt; .working                                                                                                                                            </span><br><span class="line">      role_b ? role_b-&gt;IsLose(GetOfflineTimeout()) : <span class="number">0</span>,</span><br><span class="line">=======</span><br><span class="line">      role_b ? role_b-&gt;IsLose() : <span class="number">0</span>,</span><br><span class="line">&gt;&gt;&gt;&gt;&gt;&gt;&gt; .merge-right.r105441</span><br></pre></td></tr></table></figure></p>
+<p><code>&lt;&lt;&lt;&lt;</code>表示本地，也即合并的目标<br><code>&gt;&gt;&gt;&gt;</code>表示合并的源头，也是远程分支<br><code>====</code>分割本地与源分支，跟&lt;&lt;&lt;&lt;和&gt;&gt;&gt;&gt;成对出现。</p>
+<h2 id="u64A4_u9500_u4FEE_u6539"><a href="#u64A4_u9500_u4FEE_u6539" class="headerlink" title="撤销修改"></a>撤销修改</h2><p>有时候会觉得修改不合适，svn提供了撤销的机制，分为提交前撤销与提交后撤销：</p>
+<ul>
+<li><p>提交前<br>提交前撤销比较方便，如下:</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn revert &lt;待撤销的文件或目录&gt;     <span class="comment"># 撤销文件</span></span><br><span class="line">svn revert -R &lt;目录&gt;                <span class="comment"># 递归撤销目录下所有修改</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>提交后<br>提交后就麻烦一点，也是借助merge的功能</p>
+<figure class="highlight stata"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">svn <span class="keyword">merge</span> R1:R2 &lt;文件或目录&gt;</span><br><span class="line">svn <span class="keyword">ci</span> -<span class="keyword">m</span> <span class="string">"提交说明"</span></span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>R1为插销文件想要回退到的版本号，R2为撤销文件最新版本号.</p>
 </span>
       
     </div>
@@ -247,13 +270,11 @@
         <div class="post-nav">
           <div class="post-nav-prev post-nav-item">
             
-              <a href="/2016/01/18/head-include-problem.1/" rel="prev">C++头文件互相包含问题</a>
-            
           </div>
 
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2015/12/17/transaction/" rel="next">游戏中的逻辑事务架构设计</a>
+              <a href="/2016/03/31/handle-errors/" rel="next">常见错误及处理方法汇总</a>
             
           </div>
         </div>
@@ -358,7 +379,7 @@
           <div class="post-toc">
             
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#u5355_u4F8B_u6A21_u5F0F"><span class="nav-number">1.</span> <span class="nav-text">单例模式</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#u5355_u4F8B_u5B9E_u73B0"><span class="nav-number">2.</span> <span class="nav-text">单例实现</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#u7EE7_u627F"><span class="nav-number">2.1.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u6CDB_u578B"><span class="nav-number">2.2.</span> <span class="nav-text">泛型</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#u72B6_u6001_u67E5_u8BE2"><span class="nav-number">1.</span> <span class="nav-text">状态查询</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u63D0_u4EA4"><span class="nav-number">2.</span> <span class="nav-text">提交</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u5408_u5E76"><span class="nav-number">3.</span> <span class="nav-text">合并</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#branch-_26gt_3Btrunk"><span class="nav-number">3.1.</span> <span class="nav-text">branch->trunk</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#trunk-_26gt_3Bbranch"><span class="nav-number">3.2.</span> <span class="nav-text">trunk->branch</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u89E3_u51B3_u51B2_u7A81"><span class="nav-number">4.</span> <span class="nav-text">解决冲突</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#u64A4_u9500_u4FEE_u6539"><span class="nav-number">5.</span> <span class="nav-text">撤销修改</span></a></li></ol></div>
             
           </div>
           <div class="post-toc-indicator-bottom post-toc-indicator"></div>
